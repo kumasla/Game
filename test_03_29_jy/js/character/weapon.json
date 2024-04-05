@@ -1,0 +1,33 @@
+{
+    "sniperRifle" : {
+        "name" : "sniperRifle",
+        "type" : "sniper",
+        "damage" : 100,
+        "range" : 300,
+        "fireRate" : 500,
+        "tag" : "ghost",
+        "lastFired" : 0,
+        "color" : "0xFFFF00"
+    },
+    "flameBlade" : {
+        "name" : "flameBlade",
+        "type" : "sword",
+        "damage" : 100,
+        "range" : 100,
+        "fireRate" : 500,
+        "tag" : "ghost",
+        "lastFired" : 0,
+        "color" : "0x000000"
+    },
+    "cursedUnwol-Do" : {
+        "name" : "cursedUnwol-Do",
+        "type" : "spear",
+        "damage" : 100,
+        "range" : 200,
+        "fireRate" : 500,
+        "tag" : "ghost",
+        "lastFired" : 0,
+        "color" : "0x00FF00"
+    }
+
+}
