@@ -14,8 +14,6 @@ class MonsterController {
         this.stateMonsterLevel = 0;
         //this.createBoss();
 
-        this.mapWidth = this.scene.game.config.width;
-        this.mapHeight = this.scene.game.config.height;
         this.divisions = 4; // 맵을 4x4로 분할한다고 가정
 
 
@@ -31,6 +29,9 @@ class MonsterController {
     }
     
     getRandomSpawnPosition() {
+        this.mapWidth = this.scene.game.imageWidth;
+        this.mapHeight = this.scene.game.imageHeight;
+        
         // 사분할된 영역 중 하나를 랜덤하게 선택
         const divisionWidth = this.mapWidth / this.divisions;
         const divisionHeight = this.mapHeight / this.divisions;
@@ -56,6 +57,7 @@ class MonsterController {
     }
 
     createCirclePatternMonster() {
+        console.log(this.scene);
         console.log(this.mapWidth);
         console.log(this.mapHeight);
         const centerX = this.player.x;
@@ -213,7 +215,7 @@ class MonsterController {
         this.expBeadsGroup.children.each(expBead => {
             expBead.update();
         });
-        this.bonusBoxGroup.children.each(expBead => {
+        this.bonusBoxGroup.children.each(bonusBox => {
             bonusBox.update();
         });
 
