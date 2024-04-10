@@ -1,0 +1,30 @@
+{
+    "body" : {
+        "name" : "body",
+        "type" : "passive",
+        "maxHealth" : "+10",
+        "speed" : "-2",
+        "imagePath": "assets/item/body.png"
+    },
+    "hand" : {
+        "name" : "hand",
+        "type" : "passive",
+        "attackSpeed" : "+10",
+        "power" : "-10",
+        "imagePath" : "assets/item/hand.png"
+    },
+    "foot" : {
+        "name" : "foot",
+        "type" : "passive",
+        "speed" : "+10",
+        "luck" : "+2%",
+        "imagePath" : "assets/item/foot.png"
+    },
+    "eyes" : {
+        "name" : "eyes",
+        "type" : "passive",
+        "critical" : "+2%",
+        "range" : "+15",
+        "imagePath" : "assets/item/eyes.png"
+    }
+}
