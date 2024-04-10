@@ -26,6 +26,8 @@ class MonsterController {
         });
 
         this.setupCollisions();
+
+        this.lastPlayerPosition = { x: null, y: null };
     }
     
     getRandomSpawnPosition() {
@@ -57,13 +59,14 @@ class MonsterController {
     }
 
     createCirclePatternMonster() {
-        console.log(this.scene);
-        console.log(this.mapWidth);
-        console.log(this.mapHeight);
         const centerX = this.player.x;
         const centerY = this.player.y;
         let radius = 400; // 기본 원의 반지름
     
+        if (this.lastPlayerPosition.x === centerX && this.lastPlayerPosition.y === centerY) {
+            radius = Phaser.Math.Between(100, 300); // 반지름을 100에서 400 사이로 랜덤 조정
+        }
+
         // 플레이어 위치가 맵 가장자리에 가까울 경우 원의 반지름 조정
         const edgeThreshold = 50; // 가장자리로부터의 거리 임계값
         const minRadius = 100; // 최소 반지름
@@ -87,6 +90,9 @@ class MonsterController {
     
             this.spawnMonster(x, y);
         }
+
+        this.lastPlayerPosition.x = centerX;
+        this.lastPlayerPosition.y = centerY;
     }
     
 
