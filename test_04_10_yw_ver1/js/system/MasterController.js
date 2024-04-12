@@ -26,7 +26,7 @@ class MasterController {
             // 모든 이미지 로드 완료 후 실행할 코드(첫 무기 웨펀컨트롤러에 추가)
             switch(true){
                 case characterName == 'megaman' :
-                    firstWeapon = 'justSword';
+                    firstWeapon = 'automaticRocketLauncher';
                     break;
                 case characterName == 'link' :
                     firstWeapon = 'kar98';

@@ -4,6 +4,7 @@
 class MainMenu extends Phaser.Scene {
     constructor() {
         super('MainMenu');
+        this.bgm;
     }
 
     // init(data) {
@@ -17,9 +18,15 @@ class MainMenu extends Phaser.Scene {
         this.load.image('background', 'assets/background/mountine.png');
         this.load.image('button', 'assets/buttons/blue_button.png');
         this.load.audio('joinSceneVoice', 'assets/sounds/pixelHeroseVoiceMechanick.mp3');
+        this.load.audio('lobyBGM', 'assets/sounds/lobyBGM.mp3');
         
     }
     create(){ // 생성
+
+        
+        // 사운드
+        this.bgm = this.sound.add('lobyBGM', { loop: true, volume: 0.3, rate: 1.25});
+        this.bgm.play();
         
         // 일단 여기는 되어있긴한데.. 냅둠
         const webWidth =  config.width;
@@ -67,7 +74,7 @@ class MainMenu extends Phaser.Scene {
             button.on('pointerdown', () => {
                 switch (i) {
                     case 0 :
-                        this.scene.start('CharacterSelect'); // 캐릭터 선택창
+                        this.scene.start('CharacterSelect',{ lobyBGM : this.bgm}); // 캐릭터 선택창
                         break;
                     case 1 :
                         this.scene.start(); // 옵션 선택창
@@ -129,6 +136,8 @@ class MainMenu extends Phaser.Scene {
         .setOrigin(0.5)
         .setAlign('center')
         .setFontSize(30);
+
+
 
     }
     update(){ // 변경(갱신)

@@ -34,7 +34,7 @@ class CharacterStatus{
         const characterHit = Math.floor(Math.random() * 101);
 
         if(this.avoidance >= characterHit){
-            console.log('캐릭터 회피')
+            // 회피
         }else{
             //this.nowHealth -= damage;
 
@@ -52,7 +52,7 @@ class CharacterStatus{
             if(this.nowHealth <= 0){
                 return 'gameOver';
             }else{
-                console.log('캐릭터 체력 : ', this.nowHealth);
+
             }
         }
     }
@@ -64,10 +64,8 @@ class CharacterStatus{
             //다만 객체의 내부로 동적으로 유지 됩니다
             if(this.ownPassive.hasOwnProperty(data.name)){
                 this.ownPassive[data.name]++;
-                console.log(this.ownPassive);
             }else{
                 this.ownPassive[data.name] = 1;
-                console.log(this.ownPassive);
             }
 
             for(const status in data){
@@ -91,7 +89,6 @@ class CharacterStatus{
         }
         this.scene.masterController.weaponController.updateWeaponData(this);
         this.nowHealth = this.maxHealth;
-        console.log(this)
         
     }
 

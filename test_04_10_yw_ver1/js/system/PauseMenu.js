@@ -14,8 +14,6 @@ class PauseMenu extends Phaser.Scene {
         
         const characterStatus = data.characterStatus;
         const weapons = data.weapons;
-        console.log(weapons);
-        console.log(weapons[0].path);
 
 
 

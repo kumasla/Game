@@ -118,7 +118,7 @@ class ItemSelectionScene extends Phaser.Scene {
                 }
             });
         } else {
-            console.log(clickedIndex);
+            //console.log(clickedIndex);
         }
     }
 
@@ -159,9 +159,6 @@ class ItemSelectionScene extends Phaser.Scene {
             const selectedItemKey = this.selectedItems[selectedItemIndex];
 
             const selectedItem = this.itemsData[selectedItemKey];
-
-            console.log('아이템 선택됨', selectedItem);
-            // selectedItem객체 넘겨서 담겨있는 정보를 토대로 캐릭터데이터 업데이트
 
             this.masterController.updateItem(selectedItem);
 

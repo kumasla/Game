@@ -6,6 +6,7 @@ class CharacterSelect extends Phaser.Scene {
         this.cursorKeys = null;
         this.moveDelay = 200;
         this.lastMoveTime = 0;
+        this.bgm;
     }
 
     preload() {
@@ -14,10 +15,12 @@ class CharacterSelect extends Phaser.Scene {
         this.load.image('linkThumb', "assets/characterThumbnail/link2.png");
     }
 
-    create() {
+    create(data) {
         const { width, height } = this.scale;
         const x = width / 2;
         const y = height / 2;
+
+        this.bgm = data.lobyBGM;
 
         this.background = this.add.image(x ,y, 'selectBackground')
             .setOrigin(0.5)
@@ -31,9 +34,6 @@ class CharacterSelect extends Phaser.Scene {
     createThumbnails() {
         const width = game.config.width;
         const height = game.config.height;
-    
-        console.log(config.width);
-        console.log(config.height);
 
         const thumbnailWidth = 150;
         const thumbnailHeight = 150;
@@ -166,6 +166,7 @@ class CharacterSelect extends Phaser.Scene {
         }
     
         if (selectedCharacterName != null) {
+            this.bgm.stop();
             this.scene.start('StageSuperMario', { characterName: selectedCharacterName });
         }
     }
@@ -212,7 +213,6 @@ class CharacterSelect extends Phaser.Scene {
         if (newIndex !== this.selectedIndex) {
             this.selectedIndex = newIndex;
             this.highlightSelectedThumbnail();
-            console.log(`New Index: ${this.selectedIndex}`);
         }
     }
 }

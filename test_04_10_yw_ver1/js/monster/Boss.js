@@ -23,6 +23,7 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
 
         const trail = this.scene.add.sprite(this.x, this.y, 'bossSprite');
         trail.setAlpha(0.1); // 잔상의 투명도 설정
+        trail.setScale(4);
         this.scene.tweens.add({
             targets: trail,
             alpha: { from: 0.5, to: 0 },

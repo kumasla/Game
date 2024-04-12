@@ -5,7 +5,7 @@
             this.masterController;
             this.player;        
             this.stageTimer;
-            this.stageDuration = 50; // 스테이지 지속 시간 (초)
+            this.stageDuration = 30; // 스테이지 지속 시간 (초)
             this.currentStage = 1;
             this.timerText;
             this.timer;
@@ -21,10 +21,6 @@
 
         init(data) {
             this.characterName = data.characterName;
-
-            if(data.selectedItem) {
-                console.log(data.selectedItem);
-            }
             
         }
         
@@ -107,6 +103,7 @@
 
                 this.game.imageWidth = image.displayWidth;
                 this.game.imageHeight = image.displayHeight;
+
                 // 뽑고 싶으면
                 // const imageWidth = this.scene.game.imageWidth;
                 // const imageHeight = this.scene.game.imageHeight;
@@ -142,9 +139,6 @@
 
             // ESC 키 이벤트 수정
             this.input.keyboard.on('keydown-ESC', () => {
-                
-                this.updateSettlement();
-                console.log(this.settlement);
                 if (!this.scene.isPaused()) {
                     const characterStatus = this.masterController.getCharacterStatus();
                     const weapons = this.masterController.getWeapons();
@@ -165,11 +159,13 @@
             this.healthBarBackground.fillRoundedRect(10, 10, 300, 20, 5); // 위치 조정 (Y축을 경험치 바보다 위로)
             this.healthBarBackground.lineStyle(2, 0xffffff, 1); // 하얀색 테두리 설정
             this.healthBarBackground.strokeRoundedRect(10, 10, 300, 20, 5); // 하얀색 테두리 추가
+            this.healthBarBackground.setDepth(10);
 
             // 실제 체력 바 300이 max라고 보고 이쪽을 업데이트 해주면 됨
             this.healthBarFill = this.add.graphics();
             this.healthBarFill.fillStyle(0xff0000, 1); // 불투명한 빨간색
             this.healthBarFill.fillRoundedRect(10, 10, 300, 20, 5); // 체력 100% 상태
+            this.healthBarFill.setDepth(10);
 
             // 경험치 바 배경 설정 (체력 바 코드 아래에 배치)
             this.expBarBackground = this.add.graphics();
@@ -177,17 +173,19 @@
             this.expBarBackground.fillRoundedRect(10, 40, 300, 20, 5); // 위치, 크기, 둥근 모서리
             this.expBarBackground.lineStyle(2, 0xffffff, 1); // 하얀색 테두리 설정
             this.expBarBackground.strokeRoundedRect(10, 40, 300, 20, 5); // 하얀색 테두리 추가
+            this.expBarBackground.setDepth(10);
 
             // 실제 경험치 바 300이 max라고 보고 이쪽을 업데이트 해주면 됨
             this.expBarFill = this.add.graphics();
             this.expBarFill.fillStyle(0x00ff00, 1); // 불투명한 초록색
             this.expBarFill.fillRoundedRect(10, 40, 0, 20, 5); // 초기 경험치 0%
+            this.expBarFill.setDepth(10);
 
             this.healthText = this.add.text(160, 10, '', { fontSize: '16px', fill: '#ffffff' }).setScrollFactor(0);
             this.expText = this.add.text(160, 40, '', { fontSize: '16px', fill: '#ffffff' }).setScrollFactor(0);
 
-            this.healthText.setDepth(1);
-            this.expText.setDepth(1);
+            this.healthText.setDepth(11);
+            this.expText.setDepth(11);
 
             // 체력 바와 경험치 바를 화면 상단에 고정
             this.healthBarBackground.setScrollFactor(0);

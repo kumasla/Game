@@ -20,7 +20,7 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     this.health = 10; // 몬스터의 체력
     this.attack = 10; // 기본 공격력
     this.setDepth(1);
-    
+
   }
 
   setupAnimations() {}
@@ -82,7 +82,7 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.health <= 0) {
-      
+
       this.destroyMonster();
     }
   }

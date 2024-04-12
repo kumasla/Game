@@ -150,7 +150,7 @@ class WeaponController{
                 this.ownTag[tag] = 1;
             }
         }else{
-            console.log("remove에서 불림")
+            // remove에서 불림
         }
         //태그로인한 추가 스테이터스를 태그스테이터스 업데이트(addWeapon으로 return)
         return this.updateTagStatus();
@@ -231,8 +231,6 @@ class WeaponController{
 
     //weapons배열 안에 있는 무기 객체의 값을 업데이트하면 객체라서 업데이트된게 유지가됨
         //this.weapons[0].damage = this.weapons[0].damage + 1;
-        //console.log(this.weapons[0].damage)
-        //console.log(this.weapons)
 
     //근접공격
     rotatingAttack(weapon, angle, monsterX, monsterY) {

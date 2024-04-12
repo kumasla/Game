@@ -13,11 +13,6 @@ class Loading extends Phaser.Scene {
         this.load.image('background', 'assets/background/mountine.png');
     }
     create(){ 
-        console.log(config);
-        console.log(game.config);
-        console.log(config.width);
-        console.log(config.height);
-
         //
         const{x,y,width,height} = this.cameras.main;
         this.background = this.add.tileSprite(x, y, width, height, 'background')
