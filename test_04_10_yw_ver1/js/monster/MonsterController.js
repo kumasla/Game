@@ -62,9 +62,11 @@ class MonsterController {
         const centerX = this.player.x;
         const centerY = this.player.y;
         let radius = 400; // 기본 원의 반지름
+        let monstersCount = 10; // 생성할 몬스터의 수
     
         if (this.lastPlayerPosition.x === centerX && this.lastPlayerPosition.y === centerY) {
-            radius = Phaser.Math.Between(100, 300); // 반지름을 100에서 400 사이로 랜덤 조정
+            monstersCount = Phaser.Math.Between(10,30);
+            radius = Phaser.Math.Between(200, 500); // 반지름을 100에서 400 사이로 랜덤 조정
         }
 
         // 플레이어 위치가 맵 가장자리에 가까울 경우 원의 반지름 조정
@@ -77,7 +79,6 @@ class MonsterController {
             radius = minRadius; // 원의 반지름을 최소로 조정
         }
     
-        const monstersCount = 10; // 생성할 몬스터의 수
     
         for (let i = 0; i < monstersCount; i++) {
             const angle = (i / monstersCount) * 2 * Math.PI;
@@ -85,8 +86,8 @@ class MonsterController {
             let y = centerY + radius * Math.sin(angle);
     
             // 몬스터가 맵 밖으로 나가지 않도록 조정
-            x = Phaser.Math.Clamp(x, 0, this.mapWidth);
-            y = Phaser.Math.Clamp(y, 0, this.mapHeight);
+            x = Phaser.Math.Clamp(x, 50, this.mapWidth-50);
+            y = Phaser.Math.Clamp(y, 50, this.mapHeight-50);
     
             this.spawnMonster(x, y);
         }
@@ -94,6 +95,7 @@ class MonsterController {
         this.lastPlayerPosition.x = centerX;
         this.lastPlayerPosition.y = centerY;
     }
+    
     
 
 

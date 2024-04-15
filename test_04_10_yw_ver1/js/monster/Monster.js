@@ -4,6 +4,7 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.player = player;
+    this.luck = player.luck;
     this.scene = scene;
     // 미사일과 대상의 충돌 설정
     this.scene.physics.add.overlap(
@@ -16,6 +17,8 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
 
     this.expBeadGroup = scene.physics.add.group();
     this.bonusBoxGroup = scene.physics.add.group();
+
+    console.log(player);
 
     this.health = 10; // 몬스터의 체력
     this.attack = 10; // 기본 공격력
@@ -118,7 +121,11 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
       const expBead = new ExpBead(this.scene, this.x, this.y);
       this.scene.masterController.monsterController.expBeadsGroup.add(expBead);
     }
-
+    let luck = this.player.luck;
+    console.log(this.player.texture);
+    console.log(this.player.characterStatus);
+    console.log(luck);
+    console.log(this.luck);
     // 확률적으로 보너스 상자 생성
     if (Math.random() <= 0.05) {
       const bonusBox = new BonusBox(this.scene, this.x, this.y);

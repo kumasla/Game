@@ -21,6 +21,7 @@ class CharacterController {
 
         this.isBlinking = false;
         this.visible = true;
+
     }
 
     update(){
@@ -180,4 +181,33 @@ class CharacterController {
           this.blinkTimer.remove(); // 깜빡임 타이머 제거
         }
     }
+
+    activateSpecial(){
+        switch(true){
+            case this.selectedCharacterName == 'megaman':
+
+                break;
+
+            case this.selectedCharacterName == 'link':
+
+                break;
+
+            case this.selectedCharacterName == 'kirby':
+
+                break;
+
+            case this.selectedCharacterName == 'red':
+
+                break;
+
+            case this.selectedCharacterName == 'bulletKing':
+
+                break;
+
+            case this.selectedCharacterName == 'sonic':
+
+                break;
+        }
+    }
+
 }

@@ -62,6 +62,12 @@
 
             //캐릭터 이미지
             this.load.spritesheet('megaman', 'assets/player/megaman.png', {frameWidth: 1056, frameHeight: 1056});
+            this.load.spritesheet('link', 'assets/player/link.png', {frameWidth: 32, frameHeight: 32});
+            this.load.spritesheet('kirby', 'assets/player/kirby.png', {frameWidth: 32, frameHeight: 32});
+            this.load.spritesheet('red', 'assets/player/red.png', {frameWidth: 32, frameHeight: 32});
+            this.load.spritesheet('bulletking', 'assets/player/bulletking.png', {frameWidth: 32, frameHeight: 32});
+            this.load.spritesheet('sonic', 'assets/player/sonic.png', {frameWidth: 25, frameHeight: 40});
+
             //캐릭터 데이터
             this.load.json('characterData', 'js/character/character.json');
 

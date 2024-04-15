@@ -32,12 +32,15 @@ class MasterController {
                     firstWeapon = 'kar98';
                     break;
                 case characterName == 'red' :
-                firstWeapon = 'kar98';
+                    firstWeapon = 'automaticRocketLauncher';
                     break;
                 case characterName == 'sonic' :
                     firstWeapon = 'kar98';
                     break;
                 case characterName == 'bulletking' :
+                    firstWeapon = 'kar98';
+                    break;
+                    case characterName == 'kirby' :
                     firstWeapon = 'kar98';
                     break;
             }

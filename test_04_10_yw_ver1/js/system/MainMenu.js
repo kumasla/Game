@@ -7,48 +7,34 @@ class MainMenu extends Phaser.Scene {
         this.bgm;
     }
 
-    // init(data) {
-        
-    //     this.num = data.test;
-    //     console.log(data);
-    //     console.log(this.num);
-    // }
-
     preload(){ // 사전설정
-        this.load.image('background', 'assets/background/mountine.png');
+        //this.load.image('background', 'assets/background/mountine.png');
+        this.load.image('mainBackground', 'assets/background/citypopBG.gif');
         this.load.image('button', 'assets/buttons/blue_button.png');
         this.load.audio('joinSceneVoice', 'assets/sounds/pixelHeroseVoiceMechanick.mp3');
         this.load.audio('lobyBGM', 'assets/sounds/lobyBGM.mp3');
         
     }
     create(){ // 생성
-
-        
         // 사운드
         this.bgm = this.sound.add('lobyBGM', { loop: true, volume: 0.3, rate: 1.25});
         this.bgm.play();
-        
-        // 일단 여기는 되어있긴한데.. 냅둠
-        const webWidth =  config.width;
-        const webHeight = config.height;
+
+
+        const centerX = this.cameras.main.width / 2;
+        const centerY = this.cameras.main.height / 2;
 
         this.joinSceneVoice = this.sound.add('joinSceneVoice', { loop: false, volume: 0.3});
         // 나중에 Loading.js 씬 완성하고 넘어온 후에 자연스러운 타이밍에 소리나도록
         // 예를들면 딜레이 0.5 정도 걸어서 화면이 눈에 보이고 소리 ㄱㄱ
         this.joinSceneVoice.play();
         
-        const{x,y,width,height} = this.cameras.main;
-        this.background = this.add.tileSprite(x, y, width, height, 'background')
-                            .setOrigin(0).setScrollFactor(0,1);
-
-        const center = {
-            x : x + width/2,
-            y : y + height/2
-        }
+        let background = this.add.image(centerX, centerY, 'mainBackground');
+        background.setDisplaySize(this.cameras.main.width, this.cameras.main.height);
 
         this.title = this.add.text(
-            center.x,
-            height * 1/10,
+            centerX,
+            this.cameras.main.height * 0.1,
             'Pixel Heroes'
         )
         .setFill('#f55a42')
@@ -57,85 +43,52 @@ class MainMenu extends Phaser.Scene {
         .setDepth(999)
         .setAlign('center');
 
-        this.buttons = [];
+        //console.log(this.cameras.main.height);
+        // 여백 만들기
+        const topMargin = this.cameras.main.height * 0.127;
+        const bottomMargin = this.cameras.main.height * 0.127; 
+        const availableHeight = this.cameras.main.height - topMargin - bottomMargin;
 
-        const buttonCount = 4;
-        const verticalSpacing = 100;
+        // 버튼 생성 및 텍스트 추가 합쳤음
+        const buttonLabels = ['Click to select', 'Options', 'Ranking', 'Developers'];
+        const buttonCount = buttonLabels.length;
+        const verticalSpacing = availableHeight / (buttonCount + 1);
 
-        for(let i = 0; i < buttonCount; i++){
+        for (let i = 0; i < buttonCount; i++) {
             const button = this.add.image(
-                center.x,
-                center.y + (i - (buttonCount - 1) / 2) * verticalSpacing,
+                centerX,
+                topMargin + verticalSpacing * (i + 1),
                 'button'
             ).setInteractive().setDepth(50);
 
             button.setScale(0.3, 0.2);
 
+            const labelText = this.add.text(centerX, topMargin + verticalSpacing * (i + 1), buttonLabels[i])
+                .setFill('#f55a42')
+                .setDepth(999)
+                .setOrigin(0.5)
+                .setAlign('center')
+                .setFontSize(30);
+
             button.on('pointerdown', () => {
                 switch (i) {
-                    case 0 :
-                        this.scene.start('CharacterSelect',{ lobyBGM : this.bgm}); // 캐릭터 선택창
+                    case 0:
+                        this.scene.start('CharacterSelect', { lobyBGM: this.bgm });
                         break;
-                    case 1 :
-                        this.scene.start(); // 옵션 선택창
+                    case 1:
+                        this.scene.start();
                         break;
-                    case 2 :
-                        this.scene.start(); // 랭킹순위표 
+                    case 2:
+                        this.scene.start();
                         break;
-                    case 3 :
-                        this.scene.start(); // 개발자 소개로
+                    case 3:
+                        this.scene.start();
                         break;
                     default:
                         break;
                 }
             });
-
-            this.buttons.push(button);
         }
-
-        this.clickToSelect = this.add.text(
-            center.x,
-            center.y - 155,
-            'Click to select' 
-        )
-        .setFill('#f55a42')
-        .setDepth(999)
-        .setOrigin(0.5)
-        .setAlign('center')
-        .setFontSize(30);
-
-        this.options = this.add.text(
-            center.x,
-            center.y - 55,
-            'Options' 
-        )
-        .setFill('#f55a42')
-        .setDepth(999)
-        .setOrigin(0.5)
-        .setAlign('center')
-        .setFontSize(30);
-
-        this.ranking = this.add.text(
-            center.x,
-            center.y + 50,
-            'Ranking' 
-        )
-        .setFill('#f55a42')
-        .setDepth(999)
-        .setOrigin(0.5)
-        .setAlign('center')
-        .setFontSize(30);
-
-        this.developers = this.add.text(
-            center.x,
-            center.y + 150,
-            'Developers' 
-        )
-        .setFill('#f55a42')
-        .setDepth(999)
-        .setOrigin(0.5)
-        .setAlign('center')
-        .setFontSize(30);
 
 
 
