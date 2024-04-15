@@ -122,7 +122,7 @@ class MasterController {
 
     //이거는 CharacterStatus에서 패시브 배열 뽑아오기 ㅇㅇ
     getPassives() {
-
+        return this.characterController.characterStatus.getPassives();
     }
 
     gameOver() {

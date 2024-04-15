@@ -168,6 +168,9 @@ class ItemSelectionScene extends Phaser.Scene {
             // 전역변수 -- 해버리기
             this.game.selectionCount--;
 
+            // 인덱스 초기화.. 필요한거 같음 이거 떔에 버그있는듯?
+            this.selectedRewardIndex = -1;
+
             if(this.selectionCount > 0) {
                 this.scene.restart();
             } else {

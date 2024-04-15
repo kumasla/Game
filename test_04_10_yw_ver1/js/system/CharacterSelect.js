@@ -56,7 +56,6 @@ class CharacterSelect extends Phaser.Scene {
 
         this.createThumbnails();
 
-        this.add.text(0, 0, '캐릭터설명');
         this.createDescriptionContainer();
         
         this.cursorKeys = this.input.keyboard.createCursorKeys();

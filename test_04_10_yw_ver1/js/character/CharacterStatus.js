@@ -159,4 +159,9 @@ class CharacterStatus{
         this.tagStatus = Object.assign(this.tagStatus, status);
         return this;
     }
+
+    getPassives(){
+        console.log(this.ownPassive);
+        return this.ownPassive;
+    }
 }
