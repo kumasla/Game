@@ -4,7 +4,6 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.player = player;
-    this.luck = player.luck;
     this.scene = scene;
     // 미사일과 대상의 충돌 설정
     this.scene.physics.add.overlap(
@@ -20,22 +19,20 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
 
     this.health = 10; // 몬스터의 체력
     this.attack = 10; // 기본 공격력
+    this.speed = 100;
     this.setDepth(1);
 
-    this.startStageTimer();
   }
 
   setupAnimations() {}
 
   update() {
+    const speed = this.speed;
     // 플레이어와 몬스터 사이의 거리를 계산합니다.
     const dx = this.player.x - this.x;
     const dy = this.player.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    // 몬스터의 이동 속도를 결정합니다.
-
-    const speed = 100; // 적절한 값을 설정하세요.
     // 플레이어를 향해 천천히 이동합니다.
     this.setVelocity((dx / distance) * speed, (dy / distance) * speed);
   }
@@ -153,6 +150,25 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     }
     // 확률적으로 보너스 상자 생성
     if (Math.random() <= boxRate) {
+      const bonusBox = new BonusBox(this.scene, this.x, this.y);
+      this.scene.masterController.monsterController.bonusBoxGroup.add(bonusBox);
+    }
+
+    this.destroy();
+  }
+  
+  destroyMonster() {
+    //몬스터 죽은 횟수 올리기
+    this.scene.masterController.gameDataManager.updateMonstersKilled();
+
+    // 경험치 구슬 생성
+    for (let i = 0; i < 2; i++) {
+      const expBead = new ExpBead(this.scene, this.x, this.y);
+      this.scene.masterController.monsterController.expBeadsGroup.add(expBead);
+    }
+
+    // 확률적으로 보너스 상자 생성
+    if (Math.random() <= 0.05) {
       const bonusBox = new BonusBox(this.scene, this.x, this.y);
       this.scene.masterController.monsterController.bonusBoxGroup.add(bonusBox);
     }

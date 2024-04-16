@@ -7,6 +7,7 @@ class Lv1_0001 extends Monster {
         this.setBounce(1.4);
 
         // 몬스터 상태 설정
+        this.speed= 3;
         this.health = 20;
         this.attack = 10;
         this.attackRange = 200; // 공격 사거리
@@ -47,24 +48,24 @@ class Lv1_0001 extends Monster {
     }
 
     update() {
+        super.update();
         if (!this.isColliding) {
             const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.x, this.y);
 
-            if(distance <= this.attackRange && !this.isAttacking) {
-                this.isAttacking = true; // 공격 상태로 설정합니다.
-                this.play('attack_Lv1_0001', true); // 공격 애니메이션을 재생합니다.
-        
+            if (distance <= this.attackRange && !this.isAttacking && this.scene.time.now > this.lastAttackTime + this.attackCooldown) {
+                this.isAttacking = true; // 공격 상태로 설정
+                this.lastAttackTime = this.scene.time.now; // 마지막 공격 시간을 현재 시간으로 업데이트
+                this.play('attack_Lv1_0001', true); // 공격 애니메이션 재생
+    
                 this.on('animationupdate', (animation, frame) => {
-                    // 4번째 프레임에서만 특정 함수 실행
                     if (frame.index === 3) {
-                        this.attackAction(); // 여기에서 원하는 특정 함수를 호출
+                        this.attackAction(); // 공격 실행
                     }
                 });
-                
-                // 애니메이션 재생이 끝난 후에 다시 기본 상태로 돌아가도록 합니다.
+    
                 this.on('animationcomplete', () => {
                     this.isAttacking = false;
-                    this.play('walk_Lv1_0001', true); // 여기서는 기본 상태가 공격 대기 상태라고 가정합니다.
+                    this.play('walk_Lv1_0001', true);
                 });
             }
         } else {
@@ -84,15 +85,12 @@ class Lv1_0001 extends Monster {
     }
     
     attackAction() {
-        if (this.scene.time.now > this.nextFire) {
-            const missile = new Missile(this.scene, this.x, this.y);
+        const missile = new Missile(this.scene, this.x, this.y);
 
-            this.scene.masterController.monsterController.missilesGroup.add(missile);
+        this.scene.masterController.monsterController.missilesGroup.add(missile);
 
-            const angle = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y);
-            missile.fire(this.x, this.y, angle);
-            this.nextFire = this.scene.time.now + this.fireRate;
-        }
+        const angle = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y);
+        missile.fire(this.x, this.y, angle);
     }
 
     handleCollision() {
