@@ -22,6 +22,7 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     this.attack = 10; // 기본 공격력
     this.setDepth(1);
 
+    this.startStageTimer();
   }
 
   setupAnimations() {}
@@ -110,7 +111,6 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     this.setPosition(knockbackX, knockbackY);
   }
 
-
   //플레이어 Status
   playerStatus(){
     const masterController = this.scene.masterController;
@@ -123,11 +123,11 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
 
   dropRate(){
     //현 확률 luck 90 일경우 상자 드랍률 2%
-    const playerStatus = playerStatus();
-    playerLuck = playerStatus.luck;
+    const playerStatus = this.playerStatus();
+    const playerLuck = playerStatus.luck;
 
     //기본 드랍 확률 0.5%
-    baseDropDate() = 0.005;
+    const baseDropDate = 0.005;
 
     //드랍률 증가량
     const growthFactor = 1.5874;
@@ -135,14 +135,14 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     //30기준으로 한단계 증가
     const scale = playerLuck / 30;
 
-    const totalDropRate = baseDropRate * Math.pow(growthFactor, scale);
+    const totalDropRate = baseDropDate * Math.pow(growthFactor, scale);
 
     return totalDropRate;
   }
 
   destroyMonster() {
-    const boxRate= dropRate();
-    
+    const boxRate= this.dropRate();
+
     //몬스터 죽은 횟수 올리기
     this.scene.masterController.gameDataManager.updateMonstersKilled();
 

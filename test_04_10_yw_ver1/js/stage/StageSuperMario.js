@@ -281,6 +281,7 @@ class StageSuperMario extends Phaser.Scene {
     // 다음 스테이지가 보스인 경우를 제외한 나머지에 호출 == 보스가 죽었을 때도 기믹 시작
     startItemSelectionScene() {
         this.stageTimer = this.time.delayedCall(this.stageDuration * 1000, this.nextStageSelection, [], this);
+        console.log(this.stageTimer);
     }
 
     nextStageSelection() {
