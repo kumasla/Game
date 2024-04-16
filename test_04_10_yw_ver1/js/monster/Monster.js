@@ -18,8 +18,6 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     this.expBeadGroup = scene.physics.add.group();
     this.bonusBoxGroup = scene.physics.add.group();
 
-    console.log(player);
-
     this.health = 10; // 몬스터의 체력
     this.attack = 10; // 기본 공격력
     this.setDepth(1);
@@ -112,7 +110,39 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
     this.setPosition(knockbackX, knockbackY);
   }
 
+
+  //플레이어 Status
+  playerStatus(){
+    const masterController = this.scene.masterController;
+
+    // playerStatus를 안전하게 가져오기
+    const status = masterController.getCharacterStatus();
+    
+    return status;
+  }
+
+  dropRate(){
+    //현 확률 luck 90 일경우 상자 드랍률 2%
+    const playerStatus = playerStatus();
+    playerLuck = playerStatus.luck;
+
+    //기본 드랍 확률 0.5%
+    baseDropDate() = 0.005;
+
+    //드랍률 증가량
+    const growthFactor = 1.5874;
+
+    //30기준으로 한단계 증가
+    const scale = playerLuck / 30;
+
+    const totalDropRate = baseDropRate * Math.pow(growthFactor, scale);
+
+    return totalDropRate;
+  }
+
   destroyMonster() {
+    const boxRate= dropRate();
+    
     //몬스터 죽은 횟수 올리기
     this.scene.masterController.gameDataManager.updateMonstersKilled();
 
@@ -121,13 +151,8 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
       const expBead = new ExpBead(this.scene, this.x, this.y);
       this.scene.masterController.monsterController.expBeadsGroup.add(expBead);
     }
-    let luck = this.player.luck;
-    console.log(this.player.texture);
-    console.log(this.player.characterStatus);
-    console.log(luck);
-    console.log(this.luck);
     // 확률적으로 보너스 상자 생성
-    if (Math.random() <= 0.05) {
+    if (Math.random() <= boxRate) {
       const bonusBox = new BonusBox(this.scene, this.x, this.y);
       this.scene.masterController.monsterController.bonusBoxGroup.add(bonusBox);
     }
