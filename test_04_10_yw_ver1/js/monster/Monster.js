@@ -14,6 +14,9 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
       this // 호출 컨텍스트
     );
 
+    this.expBeadGroup = scene.physics.add.group();
+    this.bonusBoxGroup = scene.physics.add.group();
+
     this.health = 10; // 몬스터의 체력
     this.attack = 10; // 기본 공격력
     this.speed = 100;

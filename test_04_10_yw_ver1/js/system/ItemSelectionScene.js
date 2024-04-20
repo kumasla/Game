@@ -7,8 +7,14 @@ class ItemSelectionScene extends Phaser.Scene {
         this.itemsData = [];    // json배열 저장
         this.characterStatus;
         this.weapons;
+        this.passives;
         this.masterController;
         this.selectionCount;
+
+        this.rewordContainer;
+        this.passivesContainer;
+        this.weaponsContainer;
+        this.statsContainer;
     }
 
     preload() {
@@ -23,10 +29,19 @@ class ItemSelectionScene extends Phaser.Scene {
 
         this.characterStatus = data.characterStatus;
         this.weapons = data.weapons;
+        this.passives = data.passives;
         this.masterController = data.masterController;
 
-        // 리스타트 하려고 어쩔 수 없이 게임 자체에 넣었음 ㅇㅇ
         this.selectionCount = this.game.selectionCount;
+
+        const gameWidth = this.cameras.main.width;
+        const gameHeight = this.cameras.main.height;
+
+        this.rewordContainer = this.add.container(gameWidth * 0.05, gameHeight * 0.05);
+        this.passivesContainer = this.add.container(gameWidth * 0.15, gameHeight * 0.4);
+        // 맥스가 8이면 0.58 , 6이면 0.7이 적당함
+        this.weaponsContainer = this.add.container(gameWidth * 0.7, gameHeight * 0.7);
+        this.statsContainer = this.add.container(gameWidth * 0.68, gameHeight * 0.05);
 
         // 셀렉트 버튼
         this.createSelectionButton();
@@ -83,27 +98,31 @@ class ItemSelectionScene extends Phaser.Scene {
         
         selectedItems.forEach((itemName, index) => {
             const item = itemsData[itemName];
-            const x = 100 + (index * 200);
-            const y = 100;
+            const x = this.cameras.main.width * 0.1 + (index * this.cameras.main.width * 0.2);
+            const y = this.cameras.main.width * 0.1;
             const itemImage = this.add.image(x, y, item.name);
             itemImage.setScale(0.5);
     
             const itemText = this.createItemText(x, y, item, itemImage);
     
             const group = this.add.container();
+
+            let interX = this.cameras.main.width * 0.25;
+
             group.add([itemImage, itemText]);
-            group.setSize(itemImage.width, itemImage.height + itemText.height + 250);
-            const rect = this.add.rectangle(x, y + 100, group.width - 70, group.height, 0xffffff, 0.3);
+            group.setSize(interX, itemImage.height + itemText.height + this.cameras.main.height * 0.287);
+            const rect = this.add.rectangle(x, y + this.cameras.main.height * 0.118, group.width - this.cameras.main.width * 0.069, group.height, 0xffffff, 0.3);
             rect.setStrokeStyle(2, 0xffffff); 
             group.addAt(rect, 0); 
     
-            // 이미지에 클릭 이벤트를 걸어줍니다.
             itemImage.setInteractive().on('pointerdown', () => {
                 this.imageClick(group, index);
             });
     
             this.rewardObjects.push(group);
         });
+
+        this.rewardObjects.forEach(group => this.rewordContainer.add(group));
     }
 
     imageClick(group, clickedIndex) {
@@ -123,15 +142,16 @@ class ItemSelectionScene extends Phaser.Scene {
     }
 
     createItemText(x, y, item, itemImage) {
+        // 이름 관련된 text
         const group = this.add.container();
         
-        const nameText = this.add.text(x, y + itemImage.height / 2, `Name: ${item.name}`, { fontSize: '28px', fill: '#FFFFFF' }).setOrigin(0.5, 0.5);
+        const nameText = this.add.text(x, y + itemImage.height / 2, `${item.name}`, { fontSize: '25px', fill: '#FFFFFF' }).setOrigin(0.5, 0.5);
         group.add(nameText);
 
         let offsetY = nameText.height + 5;
 
         for (const prop in item) {
-            if (prop !== 'name' && prop !== 'imagePath') {
+            if (prop !== 'name' && prop !== 'imagePath' && prop !== 'type') {
                 const value = item[prop];
                 const color = this.setColorForValue(value);
                 const propText = this.add.text(x, y + offsetY + itemImage.height / 2 + 10, `${prop}: ${value}`, { fontSize: '20px', fill: color }).setOrigin(0.5, 0.5);
@@ -207,42 +227,150 @@ class ItemSelectionScene extends Phaser.Scene {
     }
 
     createPassiveSlots() {
-        // 패시브 슬롯 생성
+        const gameWidth = this.cameras.main.width;
+        const gameHeight = this.cameras.main.height;
+        const spacing = gameWidth * 0.09;
+        const slotWidth = this.cameras.main.width * 0.078;
+        const slotHeight = this.cameras.main.height * 0.0908;
+
         const passiveSlots = [];
-        //const passives = this.playerManager.getPassives(); //패시브 데이터 받아야함
-        const numPassiveSlots = Math.min(10, 20); // 최대 20개까지 표시 
-        for (let i = 0; i < numPassiveSlots; i++) {
-            const x = (i % 5) * 90;
-            const y = (Math.floor(i / 5) + 2) * 90;
-            const rect = this.add.rectangle(x + 80, y + 350, 80, 80, 0x00FF00).setInteractive();
-            const text = this.add.text(x + 80 , y + 350, `Passive ${i}`, { fill: '#ffffff', fontSize: 16 }).setOrigin(0.5);
 
-            const group = this.add.group([rect, text]);
+        let inter = 0;
+        for(let key in this.passives) {
+            const x = (inter % 5) * spacing;
+            const y = (Math.floor(inter / 5) + 3) * spacing;
 
-            passiveSlots.push(group);
+            const textPosition = spacing * 0.1;
+            
+            const value = this.passives[key];
+            const passiveImage = this.add.image(x, y, key).setOrigin(0.6).setScale(0.5);
+            const valueText = this.add.text(x+textPosition, y+textPosition, `x${value}`, { fill: '#000000'});
+
+
+            this.passivesContainer.add(passiveImage);
+            this.passivesContainer.add(valueText);
+            passiveSlots.push(passiveImage);
+
+            const imageWidth = passiveImage.width;
+            const imageHeight = passiveImage.height;
+
+            if (imageWidth > slotWidth || imageHeight > slotHeight) {
+                const scaleFactor = Math.min(slotWidth / imageWidth, slotHeight / imageHeight);
+                passiveImage.setScale(scaleFactor);
+            } else {
+                passiveImage.displayWidth = slotWidth; 
+                passiveImage.displayHeight = slotHeight;
+            }
+            inter++
         }
+
+        if(inter == 0) {
+            const x = (inter % 5) * spacing;
+            const y = (Math.floor(inter / 5) + 3) * spacing;
+            const alretText = this.add.text(x, y, '패시브가 없습니다.', {fill: '#000000', fontSize: '32px'});
+            this.passivesContainer.add(alretText);
+        }
+
     }
     
     createWeaponSlots() {
+        const gameWidth = this.cameras.main.width;
+        const gameHeight = this.cameras.main.height;
+        const spacing = gameWidth * 0.09;
+
+        const weaponSlots = []; // 무기 영역
+        const weapons = this.weapons;
+
         // 무기 슬롯 생성
-        const weaponSlots = [];
-        const weapons = this.weapons; // 무기 데이터 받아서 밑에 넣어야함.
-        const numWeaponsSlots = Math.min(6, 8);
+        const maxWeaponSlots = this.characterStatus.maxEquipment;
+        const slotWidth = this.cameras.main.width * 0.078;
+        const slotHeight = this.cameras.main.height * 0.0908;
 
-        for (let i = 0; i < numWeaponsSlots; i++) {
-            const x = (i % 3) * 100;
-            const y = (Math.floor(i / 3) * 90);
-            const rect = this.add.rectangle(x + 640, y + 535, 80, 80, 0x00FF00).setInteractive();
-            const text = this.add.text(x + 640, y + 535, `Weapon ${i}`, { fill: '#ffffff', fontSize: 16 }).setOrigin(0.5); 
+        for (let i = 0; i < maxWeaponSlots; i++) {
+            const x = (i % 3) * spacing;
+            const y = Math.floor(i / 3) * spacing;
+            
+            if (i < weapons.length) {
+                // 카구팔 기준으로 setOrigin(0.6)정도 해야 크기가 맞네.. ㅠ
+                const weaponImage = this.add.image(x, y, weapons[i].name).setOrigin(0.6).setScale(0.5);
+                weaponImage.setInteractive();
 
-            const group = this.add.group([rect, text]); 
-            weaponSlots.push(group); 
+                weaponImage.on('pointerdown', () =>{
+
+                    this.showWeaponOptions(i);
+                });
+
+
+                this.weaponsContainer.add(weaponImage);
+                weaponSlots.push(weaponImage);
+
+                const imageWidth = weaponImage.width;
+                const imageHeight = weaponImage.height;
+
+                if (imageWidth > slotWidth || imageHeight > slotHeight) {
+                    const scaleFactor = Math.min(slotWidth / imageWidth, slotHeight / imageHeight);
+                    weaponImage.setScale(scaleFactor);
+                } else {
+                    weaponImage.displayWidth = slotWidth;
+                    weaponImage.displayHeight = slotHeight;
+                }
+            } else {
+                // weapons 배열에 무기가 없는 경우 사각형
+                const rect = this.add.rectangle(x, y, slotWidth, slotHeight, 0xFFE4E1);
+                this.weaponsContainer.add(rect);
+                weaponSlots.push(rect);
+            }
         }
+    }
+
+    showWeaponOptions(index) {
+        // 위치 어디에다 띄어야 하냐
+        const optionsText = this.add.text(100, 100, '무기 작업을 선택하세요:', { fontSize: '24px', fill: '#ffffff' });
+        const enhanceText = this.add.text(100, 150, '1. 무기 강화하기', { fontSize: '20px', fill: '#ffffff' }).setInteractive();
+        const removeText = this.add.text(100, 200, '2. 무기 제거하기', { fontSize: '20px', fill: '#ffffff' }).setInteractive();
+    
+
+        enhanceText.on('pointerdown', () => {
+            this.weaponClick(index);
+
+            optionsText.destroy();
+            enhanceText.destroy();
+            removeText.destroy();
+        });
+    
+
+        removeText.on('pointerdown', () => {
+            this.removeWeapon(index);
+
+            optionsText.destroy();
+            enhanceText.destroy();
+            removeText.destroy();
+        });
+    }
+
+    weaponClick(index) {
+        const clickedWeapon = this.weapons[index];
+
+        console.log(clickedWeapon);
+        const matchWeapon = this.weapons.find((weapon, i) => i !== index && weapon.name === clickedWeapon.name && weapon.grade === clickedWeapon.grade);
+
+        if(matchWeapon){
+            // 무기 강화 메소드 호출
+            console.log('무기 강화할 수 있습니다.');
+        } else {
+            console.log('무기 강화할 수 없습니다.');
+        }
+    }
+
+    removeWeapon(index){
+        this.weapons.splice(index, 1);
+        // 컨테이너 삭제 및.. 이미지를 리플레이스 가능하려나..
+        this.weaponsContainer.remove(this.weaponsContainer.getAt(index));
     }
 
     displayPlayerStats() {
         // 캐릭터 스탯 표시
-        const statsPanel = this.add.container(650, 75); 
+        const positionY = this.cameras.main.height * 0.035
         const playerData = this.characterStatus;
         const playerStats = [
             `Level: ${playerData.level}`,
@@ -261,8 +389,8 @@ class ItemSelectionScene extends Phaser.Scene {
         ];
 
         playerStats.forEach((stat, index) => {
-            const text = this.add.text(0, index * 30, stat, { fill: '#ffffff', fontSize:24 });
-            statsPanel.add(text);
+            const text = this.add.text(0, index * positionY, stat, { fill: '#ffffff', fontSize:24 });
+            this.statsContainer.add(text);
         });
     }
 

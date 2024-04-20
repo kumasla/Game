@@ -5,8 +5,9 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
         this.player = player;
         scene.add.existing(this);
         this.setupAnimations();
-        this.maxHealth = 1000;
+        this.maxHealth = 35000;
         this.nowHealth = this.maxHealth;
+        this.maxpattern = 3;
         this.speed = 100;
         this.pattern = 0;
         this.setScale(4);
@@ -59,7 +60,7 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
                 key: 'walk_boss',
                 frames: [
                     { key: 'bossSprite', frame: 0 },
-                    { key: 'bossSprite', frame: 1 },
+                    { key: 'bossSprite', frame: 6 },
                 ],
                 frameRate: 3,
                 repeat: -1
@@ -70,24 +71,49 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
     }
 
     fireMissile() {
-        // 미사일을 발사할 각도를 랜덤하게 설정합니다.
         const numMissiles = 25; // 발사할 미사일의 수
-        const angleIncrement = Phaser.Math.PI2 / numMissiles;
-        const fireNum =4;
-
+        const angleIncrement = 360/numMissiles;
+        const fireNum = 4;
+    
         const mapWidth = this.scene.game.config.width;
         const mapHeight = this.scene.game.config.height;
-
-        
-
-        for(let i =0; i< fireNum;i++){
+    
+        for (let j = 0; j < fireNum; j++) {
             let centerX = Phaser.Math.Between(0, mapWidth);
             let centerY = Phaser.Math.Between(0, mapHeight);
-
+    
             for (let i = 0; i < numMissiles; i++) {
                 const angle = i * angleIncrement;
-                const missile = new Missile(this.scene, centerX, centerY);
+                const missile = new Missile(this.scene, centerX, centerY, 'bossMissile');
                 missile.fire(centerX, centerY, angle);
+            }
+        }
+    }
+
+    fireStraightMissiles() {
+        const numMissiles = 25; // 전체 미사일 수
+        const emptySpaceIndices = [];
+    
+        // 비어있는 공간의 인덱스를 4개 선택
+        while (emptySpaceIndices.length < 4) {
+            const index = Phaser.Math.Between(0, 9); // 0부터 9까지의 범위에서 선택
+            if (!emptySpaceIndices.includes(index)) {
+                emptySpaceIndices.push(index);
+            }
+        }
+    
+        const missileSpacing = 100; // 미사일 간격
+    
+        const sceneWidth = this.scene.game.config.width;
+        const sceneHeight = this.scene.game.config.height;
+    
+        for (let i = 0; i < numMissiles; i++) {
+            if (!emptySpaceIndices.includes(i)) {
+                const missileX = i * missileSpacing + 100; // 각 미사일마다 다른 x 좌표를 사용하여 배치
+                const missile = new Missile(this.scene, 0, 0, 'bossMissile');
+                missile.fire(missileX, 70, 90); // 직각으로 아래로 발사되도록 각도를 90도로 설정
+            } else {
+                // 비어있는 공간에는 미사일을 발사하지 않음
             }
         }
     }
@@ -97,8 +123,6 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
         const dx = this.player.x - this.x;
         const dy = this.player.y - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-
-        // 몬스터의 이동 속도를 결정합니다.
         
         // 플레이어를 향해 천천히 이동합니다.
         this.setVelocity(dx / distance * this.speed, dy / distance * this.speed);
@@ -106,16 +130,16 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
         // 일정 시간마다 미사일 발사
         if (this.scene.time.now > (this.nextFireTime || 0)) {
 
-            this.nextFireTime = this.scene.time.now + Phaser.Math.Between(5000, 10000); // 미사일을 발사하는 간격 (3초 ~ 5초 사이)
+            this.nextFireTime = this.scene.time.now + Phaser.Math.Between(2000, 5000); // 미사일을 발사하는 간격 (3초 ~ 5초 사이)
 
 
             if(this.pattern >= 1){
-
 
                 let  attack = Phaser.Math.Between(0, this.pattern);
 
                 switch(attack){
                     case 0:
+                        this.fireStraightMissiles();
                         break;
                     case 1:
                         this.speed = 200;
@@ -124,6 +148,8 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
                     case 2:
                         this.fireMissile();
                         break;
+
+                    
                 }
                 
             }
@@ -140,8 +166,8 @@ class Boss extends Phaser.Physics.Arcade.Sprite {
         }
 
         //패턴 배수
-        const patternThreshold = 30;
-        if (this.nowHealth > 0 && this.nowHealth % patternThreshold === 0) {
+        const patternThreshold = 3;
+        if (this.nowHealth > 0 && this.maxHealth*(this.maxpattern-this.pattern) / patternThreshold >= this.nowHealth) {
             this.pattern++; 
         }
     }

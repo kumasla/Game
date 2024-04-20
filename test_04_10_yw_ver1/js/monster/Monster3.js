@@ -34,7 +34,7 @@ class Monster3 extends Monster {
     update(){
         super.update();
         if (this.scene.time.now > this.nextFire) {
-            const missile = new Missile(this.scene, this.x, this.y);
+            const missile = new Missile(this.scene, this.x, this.y,'missile');
 
             this.scene.masterController.monsterController.missilesGroup.add(missile);
 

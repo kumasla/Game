@@ -7,11 +7,16 @@ class WeaponController{
 
         this.weaponPlace = {
             0 : { offSetX: 100, offSetY: -100},
-            1 : { offSetX: 150, offSetY: 0},
-            2 : { offSetX: 100, offSetY: 100},
-            3 : { offSetX: -100, offSetY: 100},
-            4 : { offSetX: -150, offSetY: 0},
-            5 : { offSetX: -100, offSetY: -100}
+
+            1 : { offSetX: -100, offSetY: -100},
+
+            2 : { offSetX: 150, offSetY: 0},
+
+            3 : { offSetX: -150, offSetY: 0},
+
+            4 : { offSetX: 100, offSetY: 100},
+
+            5 : { offSetX: -100, offSetY: 100}
         }
 
         this.ownTag = {};       //무기로 인해 보유한 태그
@@ -25,7 +30,7 @@ class WeaponController{
         //몬스터 컨트롤러에서 모든 몬스터들을 받아옴
         const monsters = this.scene.masterController.monsterController.getMonsters();
 
-        //다시한번 weapons의 배열을 순환
+        //weapons의 배열을 순환
         for (let i = 0; i < this.weapons.length; i++) {
             const weapon = this.weapons[i];
 
@@ -37,36 +42,51 @@ class WeaponController{
 
             //몬스터 컨트롤러에서 받아온 몬스터들을 다시 한번 순환하면서 거리를 계산
             monsters.children.each(monster => {
-                let distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, monster.x, monster.y);
+                //각각의 무기 위치로부터 가장 가까운 거리를 계산하도록 설정
+                let distance = Phaser.Math.Distance.Between(this.player.x + this.weaponPlace[i].offSetX, this.player.y + this.weaponPlace[i].offSetY, monster.x, monster.y);
 
                 //가장 가까운 몬스터를 갱신
                 if(distance < closestDistance){
                     // 더 짧은 거리를 찾으면 업데이트
                     closestDistance = distance;
-                    // 가장 가까운 몬스터 업데이트
-                    closestMonster = monster;
+                    // 가장 가까운 몬스터 업데이트 (무기 객체 자체에 집어넣음으로 각자 다른 몬스터를 바라 볼 수 있도록 설정)
+                    weapon.closestMonster = monster;
                 }
             });
 
             //가장 가까운 몬스터가 존재하면서(죽지않았으면서) 가장 가까운 몬스터가 현재 무기의 범위보다 작다라고한다면
-            if (closestMonster && closestDistance <= weapon.range) {
-                if (weapon.lastAttackedMonster != closestMonster) {
+            if (weapon.closestMonster && closestDistance <= weapon.range) {
+                if (weapon.lastAttackedMonster != weapon.closestMonster) {
                     //// 가장 가까운 몬스터 정보를 새로 업데이트
-                    weapon.lastAttackedMonster = closestMonster;
+                    weapon.lastAttackedMonster = weapon.closestMonster;
                 }
     
                 //몬스터 위치에 따라 몬스터를 바라보도록 만듬과 동시에 무기발사 메소드 실행
-                const angle = Phaser.Math.Angle.Between(weapon.currentX, weapon.currentY, closestMonster.x, closestMonster.y);
+                const angle = Phaser.Math.Angle.Between(weapon.currentX, weapon.currentY, weapon.closestMonster.x, weapon.closestMonster.y);
 
                 if(weapon.type == 'sniper' || weapon.type == "rifle" || weapon.type.includes("artillery")){
-                    /* if(closestMonster != null){
-                        weapon.image.setRotation(angle);
-                    }else{
-                        weapon.image.setRotation(weapon.initialAngle);
-                    } */
-                    
                     weapon.image.setRotation(angle);
-                    if(closestMonster.x < weapon.currentX){
+                    /* switch(true){
+                        case weapon.closestMonster.x < weapon.currentX && i < 3 :
+                            weapon.image.setScale(weapon.weaponScale, -weapon.weaponScale);
+                            break;
+
+                        case weapon.closestMonster.x > weapon.currentX && i < 3 :
+                            weapon.image.setScale(weapon.weaponScale, weapon.weaponScale);
+                            break;
+
+                        case weapon.closestMonster.x < weapon.currentX && i >= 3 :
+                            weapon.image.setScale(weapon.weaponScale, -weapon.weaponScale);
+                            break;
+
+                        case weapon.closestMonster.x > weapon.currentX && i >= 3 :
+                            weapon.image.setScale(weapon.weaponScale, weapon.weaponScale);
+                            break;
+
+
+                    } */
+                    if(weapon.closestMonster.x < weapon.currentX){
+
                         weapon.image.setScale(weapon.weaponScale, -weapon.weaponScale);
                     }else{
                         weapon.image.setScale(weapon.weaponScale, weapon.weaponScale);
@@ -84,15 +104,21 @@ class WeaponController{
                         break;
 
                     case weapon.type == "sword": case weapon.type == "mace": case weapon.type == "polearm":
-                        this.rotatingAttack(weapon, angle, closestMonster.x, closestMonster.y);
+                        this.rotatingAttack(weapon, angle, weapon.closestMonster.x, weapon.closestMonster.y);
                         break;
 
                     case weapon.type == "shield": case weapon.type == "lancer":
-                        this.rotatingAttack(weapon, angle, closestMonster.x, closestMonster.y);
+                        this.rotatingAttack(weapon, angle, weapon.closestMonster.x, weapon.closestMonster.y);
                         break;
                 }
-                
+            }else{
+                //무기의 scaleY가 음의 값이라면 이미지가 180도 바뀌어서 보기 때문에 Y값을 절대값으로 다시 넣어준다
+                weapon.image.scaleY = Math.abs(weapon.image.scaleY);
+                //setRotation이 0의 값이라면 처음 들고올때의 그 각도로 들고옴
+                weapon.image.setRotation(0)
             }
+
+            weapon.closestMonster = null;
         }
     }
 
@@ -125,11 +151,15 @@ class WeaponController{
             // 이미 생성된 이미지가 있으면 새로 생성 x
             if (!this.weapons[i].image) {
                 weaponImage= this.scene.add.image(this.player.x + this.weaponPlace[i].offSetX, this.player.y + this.weaponPlace[i].offSetY, this.weapons[i].name);
+                if(i % 2 == 1){
+                    weaponImage.flipX = true;
+                }
                 weaponImage.setDepth(1);
                 weaponImage.setScale(selectedWeapon.weaponScale);
                 this.weapons[i].image = weaponImage;
             }
         }
+        
         
         //태그를 추가하면서 현재 캐릭터의 정보를 return받아옴
         const characterData = this.updateOwnTag("add", selectedWeapon.tag);

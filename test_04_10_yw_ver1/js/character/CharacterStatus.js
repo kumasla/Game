@@ -70,26 +70,33 @@ class CharacterStatus{
 
             for(const status in data){
                 //데이터가 %를 포함한다면 곱하는건 곱해지게 더해져야되는건 더해지도록 구성
-                //패시브 json에 health를 maxHealth로 변경(json값만)
 
-                if(status != 'name' && status != 'imagePath' && status != 'type'){
-                    if(status == 'critical' || status == 'avoidance' || status == 'luck'){
-                        this[status] += parseFloat(data[status]);
-                    }else{
-                        switch(true){
-                            case data[status].includes('%') :
-                                this[status] *= parseFloat(data[status] / 100);
-                                this[status] = Math.floor(this[status]);
-                                break;
-                            default : this[status] += parseInt(data[status]);
-                        }
+                // 합연산, 곱연산
+                // 합연산 전체의 몇퍼(증가량) 을 전체 + 증가량 으로 업데이트
+                // 곱연산 전체를 * 증가량으로 업데이트
+                // 대신 보통 곱연산은 맨 마지막 연산으로 빼서
+                // 말 그대로 모든 수식의 마지막에 계산되도록 하는 방식이 보편적
+                // => 최종뎀 ㅇㅇ
+
+                //스테이터스 업데이트 완료
+                if(status != 'name' && status != 'imagePath' && status != 'type' && status != 'activate'){
+                    switch(true){
+                        case status == 'critical' : case status == 'avoidance' : case status == 'luck' : case status == 'defence' :
+                            this[status] += parseFloat(data[status]);
+                            break;
+                        case data[status] && data[status].includes("%") :
+                            this[status] = Math.floor(this[status] * (1 + parseFloat(data[status].split("%")[0] / 100)));
+                            break;
+                        default : this[status] += parseFloat(data[status]);
                     }
                 }
             };
         }
         this.scene.masterController.weaponController.updateWeaponData(this);
         this.nowHealth = this.maxHealth;
-        
+
+        console.log("data : ", data);
+        console.log("this : ", this);
     }
 
     //슬라이딩할때 속도 조정을 위한 함수
@@ -161,7 +168,6 @@ class CharacterStatus{
     }
 
     getPassives(){
-        console.log(this.ownPassive);
         return this.ownPassive;
     }
 }

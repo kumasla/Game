@@ -7,6 +7,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 3000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -19,6 +20,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -31,6 +33,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -43,6 +46,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -55,6 +59,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -67,6 +72,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -79,6 +85,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -91,6 +98,7 @@
         "rangeScale" : 0.5,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -103,6 +111,7 @@
         "rangeScale" : 0.3,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -115,6 +124,7 @@
         "rangeScale" : 0.3,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -127,6 +137,7 @@
         "rangeScale" : 0.3,
         "fireRate" : 500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8,
         "canActive" : "false"
@@ -139,10 +150,13 @@
         "rangeScale" : 1.5,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 2,
         "missileSpeed" : 100,
-        "weaponScale" : 0.8
+        "weaponScale" : 0.8,
+        "missileName" : "sniperBullet",
+        "missilePath" : "assets/weapon/총알/sniperBullet.png"
     },
     "kar98" : {
         "name" : "kar98",
@@ -152,10 +166,13 @@
         "rangeScale" : 1.5,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
-        "missileScale" : 3,
-        "missileSpeed" : 100,
-        "weaponScale" : 0.8
+        "missileScale" : 0.3,
+        "missileSpeed" : 1000,
+        "weaponScale" : 0.8,
+        "missileName" : "sniperBullet",
+        "missilePath" : "assets/weapon/총알/sniperBullet.png"
     },
     "crossbowGun" : {
         "name" : "crossbowGun",
@@ -165,10 +182,13 @@
         "rangeScale" : 0.9,
         "fireRate" : 1500,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 1000,
-        "weaponScale" : 1.5
+        "weaponScale" : 1.5,
+        "missileName" : "sniperBullet",
+        "missilePath" : "assets/weapon/총알/sniperBullet.png"
     },
     "beamShotgun" : {
         "name" : "beamShotgun",
@@ -178,10 +198,13 @@
         "rangeScale" : 0.6,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 200,
-        "weaponScale" : 0.8
+        "weaponScale" : 0.8,
+        "missileName" : "공허대물저격총총알",
+        "missilePath" : "assets/weapon/총알/sniperBullet.png"
     },
     "rayGun" : {
         "name" : "rayGun",
@@ -191,10 +214,13 @@
         "rangeScale" : 1,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 200,
-        "weaponScale" : 0.8
+        "weaponScale" : 0.8,
+        "missileName" : "rifleBullet",
+        "missilePath" : "assets/weapon/총알/rifleBullet.png"
     },
     "rifle" : {
         "name" : "rifle",
@@ -204,10 +230,13 @@
         "rangeScale" : 1,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 200,
-        "weaponScale" : 0.8
+        "weaponScale" : 0.8,
+        "missileName" : "rifleBullet",
+        "missilePath" : "assets/weapon/총알/rifleBullet.png"
     },
     "eggGun" : {
         "name" : "eggGun",
@@ -217,6 +246,7 @@
         "rangeScale" : 1,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 200,
@@ -230,6 +260,7 @@
         "rangeScale" : 1,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 200,
@@ -243,10 +274,13 @@
         "rangeScale" : 1,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 1000,
-        "weaponScale" : 0.3
+        "weaponScale" : 0.3,
+        "missileName" : "exclusiveBullet",
+        "missilePath" : "assets/weapon/총알/exclusiveBullet.png"
     },
     "drizzle" : {
         "name" : "drizzle",
@@ -256,6 +290,7 @@
         "rangeScale" : 0.8,
         "fireRate" : 200,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 2,
         "missileSpeed" : 1000,
@@ -269,11 +304,17 @@
         "rangeScale" : 1.5,
         "fireRate" : 3000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
-        "missileScale" : 0.8,
+        "missileScale" : 2,
         "missileSpeed" : 1000,
         "weaponScale" : 0.8,
-        "bombScale" : 250
+        "bombScale" : 150,
+        "missileName" : "rocketLauncherBullet",
+        "missilePath" : "assets/weapon/총알/rocketLauncherBullet.png",
+        "animations" : {
+            "bombEffect" : {"frames" : {"start" : 0, "end" : 6}, "frameRate" : 15, "repeat" : 1}
+        }
     },
     "hellFire" : {
         "name" : "hellFire",
@@ -283,6 +324,7 @@
         "rangeScale" : 0.8,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "missileScale" : 0.8,
         "missileSpeed" : 200,
@@ -296,6 +338,7 @@
         "rangeScale" : 0.4,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8
     },
@@ -307,6 +350,7 @@
         "rangeScale" : 0.4,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8
     },
@@ -318,6 +362,7 @@
         "rangeScale" : 0.4,
         "fireRate" : 1000,
         "tag" : "ghost",
+        "closestMonster" : null,
         "lastFired" : 0,
         "weaponScale" : 0.8
     }

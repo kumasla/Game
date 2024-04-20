@@ -3,7 +3,8 @@ class ExitConfirmation extends Phaser.Scene {
         super('ExitConfirmation');
     }
 
-    create() {
+    create(data) {
+        const player = data.player;
 
         const overlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.7);
         overlay.setOrigin(0);
@@ -17,6 +18,10 @@ class ExitConfirmation extends Phaser.Scene {
         yesButton.setOrigin(0.5).setInteractive();
 
         yesButton.on('pointerdown', () => {
+            // 캐릭터 초기화
+            // 주소값을 참조하는게 맞나? 맞으면 저거 초기화하면 끝 아니면 복잡해지네
+            
+            player.destroy();
             this.scene.stop('StageSuperMario');
             this.scene.stop('PauseMenu');
             this.scene.stop('ExitConfirmation');

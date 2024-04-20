@@ -85,12 +85,19 @@ class Lv1_0001 extends Monster {
     }
     
     attackAction() {
-        const missile = new Missile(this.scene, this.x, this.y);
+        const missile = new Missile(this.scene, this.x, this.y,'missile');
 
         this.scene.masterController.monsterController.missilesGroup.add(missile);
 
-        const angle = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y);
-        missile.fire(this.x, this.y, angle);
+        const angleInRadians = Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y);
+        let angleInDegrees = Phaser.Math.RadToDeg(angleInRadians); // 라디안 값을 360도 단위로 변환
+
+        // 음수 각도를 처리합니다.
+        if (angleInDegrees < 0) {
+            angleInDegrees += 360;
+        }
+
+        missile.fire(this.x, this.y, angleInDegrees);
     }
 
     handleCollision() {

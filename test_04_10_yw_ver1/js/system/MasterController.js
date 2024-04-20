@@ -96,12 +96,20 @@ class MasterController {
         for (const weaponKey in weaponsData) {
             const weapon = weaponsData[weaponKey];
             this.sceneData.load.image(weapon.name, weapon.path);
+            if(weapon.missileName){
+                this.sceneData.load.image(weapon.missileName, weapon.missilePath);
+            }
         }
     }
 
     //첫무기를 웨펀컨트롤러에 추가
     setupAfterLoad(weaponName) {
+        this.weaponController.addWeapon("kar98");
         this.weaponController.addWeapon(weaponName);
+        this.weaponController.addWeapon("kar98");
+        this.weaponController.addWeapon("kar98");
+        this.weaponController.addWeapon("kar98");
+        this.weaponController.addWeapon("kar98");
     }
 
     getCharacterStatus() {
@@ -145,13 +153,17 @@ class MasterController {
         // data 받은거 passives.json의 타입을 passive라고 하고 나서
         // 해당 data.type == passive 라면 패시브로
         // 아니라면 전부 무기로 보내는데 지금 코드는 웨폰 이름이니까
-        // 이름을 보내도록 
-        if(data.type == 'passive'){
-            this.characterController.characterStatus.updateStatus(data)
-        }else{
-            this.weaponController.addWeapon(data.name);
+        // 이름을 보내도록
+        switch(true){
+            case data.type == 'passive' :
+                if(data.activate){
+                    //this.characterController.characterStatus.updateStatus(data)
+                }
+                    this.characterController.characterStatus.updateStatus(data);
+                break;
+            default : this.weaponController.addWeapon(data.name);
+            break;
         }
-        
         //this.characterController.characterStatus.updateStatus(data);
     }
 

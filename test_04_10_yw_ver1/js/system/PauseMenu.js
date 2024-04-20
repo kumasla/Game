@@ -151,7 +151,7 @@ class PauseMenu extends Phaser.Scene {
         exitButton.on('pointerdown', () => {
             // 게임 종료 확인 다이얼로그 표시
             this.scene.pause('PauseMenu');
-            this.scene.launch('ExitConfirmation');
+            this.scene.launch('ExitConfirmation', {player: player});
         });
 
 

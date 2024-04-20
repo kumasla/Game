@@ -64,7 +64,7 @@ class Loading extends Phaser.Scene {
         
             this.tweens.add({
                 targets: this.cameras.main,
-                duration: 5000,
+                duration: 0,
                 zoom: 1000,
                 ease: 'Linear',
                 onUpdate: (tween) => {

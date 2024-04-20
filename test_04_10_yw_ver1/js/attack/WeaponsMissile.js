@@ -1,7 +1,7 @@
 class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, weapon){
-        super(scene, x, y, 'missile');
-        this.scene = scene;
+        super(scene, x, y, weapon.missileName);
+        this.sceneData = scene;
 
         this.weapon = weapon;
 
@@ -31,7 +31,7 @@ class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
         }else if(this.weapon.type == 'artillery'){
             byTypeCheckCollision = (missile, monster) => this.checkCollisionArtillery(missile, monster, weaponDamage);
         }else if(this.weapon.type == 'artillery-bomb'){
-            const targetX = x + Math.cos(angle) * this.weapon.range; // 최종 목표 x 위치
+            /* const targetX = x + Math.cos(angle) * this.weapon.range; // 최종 목표 x 위치
             const targetY = y + Math.sin(angle) * this.weapon.range; // 최종 목표 y 위치
 
 
@@ -44,7 +44,7 @@ class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
                 onComplete: () => {
                     this.explodeMisiile(targetX, targetY, weaponDamage); // 이동 완료 후 폭발
                 }
-            });
+            }); */
             byTypeCheckCollision = (missile, monster) => this.checkCollisionBomb(missile, monster, weaponDamage);
         }
 
@@ -61,29 +61,39 @@ class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
 
     //폭발 중화기
     checkCollisionBomb(missile, monster, damage){
-        this.explodeMisiile(monster.x, monster.y, damage);
+        this.explodeMissile(monster.x, monster.y, damage);
         missile.destroy();
     }
 
     // x = 충돌한 몬스터의 x값, y = 충돌한 몬스터의 y 값
-    explodeMisiile(x, y, weaponDamage){
-        if(this.active){
-            //모든 몬스터들을 가지고옴
-            const monsters = this.scene.masterController.monsterController.getMonsters();
+    explodeMissile(x, y, weaponDamage){
+        // 모든 몬스터들을 가지고옴
+        const monsters = this.scene.masterController.monsterController.getMonsters();
+        // 모든 몬스터를 순회하면서 폭발 범위 안에 있는 몬스터들을 찾음
+        const inRangeMonster = monsters.getChildren().filter(monster => {
+            const distance = Phaser.Math.Distance.Between(monster.x, monster.y, x, y);
+            return distance <= this.weapon.bombScale;
+        });
 
-            //모든 몬스터를 순회하면서 폭발범위안에 있는 몬스터들을 filter함수를 이용해서 바로 집어넣음
-            const inRangeMonster = monsters.getChildren().filter(monster => {
-                const distance = Phaser.Math.Distance.Between(monster.x, monster.y, x, y);
-                return distance <= this.weapon.bombScale;
-            });
+        // 범위 안 몬스터들에게 데미지 부여
+        inRangeMonster.forEach(monster => {
+            monster.hit(weaponDamage);
+        });
 
-            //위에서 만들어진 범위 안 몬스터들을 순회하면서 데미지 부여
-            inRangeMonster.forEach(monster => {
-                monster.hit(weaponDamage);
-            });
+        /* // 파티클 이펙트 생성
+        const particles = this.scene.add.particles('bombEffect');
+        const emitter = particles.createEmitter({
+            speed: 100,
+            scale: { start: 1, end: 0 },
+            blendMode: 'ADD',
+            lifespan: 200
+        });
 
-            this.destroy();
-        }
+        // 파티클 이펙트 위치 설정 및 발동
+        emitter.setPosition(x, y);
+        emitter.explode(20); */
+
+        this.destroy(); // 미사일 객체 파괴
     }
 
     // 무기가 몬스터 때리기

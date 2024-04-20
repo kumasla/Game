@@ -23,7 +23,7 @@
     "link" : {
         "maxHealth" : 270,
         "speed" : 200,
-        "attackSpeed" : 1.2,
+        "attackSpeed" : 1000,
         "power" : 90,
         "range" : 400,
         "critical" : 2,
