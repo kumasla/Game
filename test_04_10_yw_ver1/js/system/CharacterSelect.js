@@ -24,6 +24,8 @@ class CharacterSelect extends Phaser.Scene {
         this.load.image('sonicThumb', "assets/characterThumbnail/sonic.png");
         this.load.image('bulletkingThumb', "assets/characterThumbnail/bulletking.png");
         this.load.image('redThumb', "assets/characterThumbnail/red.png");
+        this.load.spritesheet('playButton', 'assets/buttons/playButton.png', { frameWidth: 726, frameHeight: 452 });
+
         
         this.load.image('selectBackground', "assets/background/helloWorldBG.gif");
 
@@ -110,14 +112,23 @@ class CharacterSelect extends Phaser.Scene {
         const thumbnailHeight = thumbnailWidth;
         const spacing = thumbnailWidth * 1/9;
 
-        const startText = this.add.text(width / 2, height * 0.85, '시작', { fill: '#ffffff', fontSize:'32px' })
+        const startButton = this.add.sprite(width / 2, height * 0.85, 'playButton', 0)
             .setOrigin(0.5)
             .setInteractive()
-            .setDepth(50);
+            .setScale(0.2);
 
-        startText.on('pointerdown', () => {
+        startButton.on('pointerover', () => {
+            startButton.setFrame(1);
+        });
+
+        startButton.on('pointerout', () => {
+            startButton.setFrame(0);
+        });
+
+        startButton.on('pointerdown', () => {
             this.startSelectedCharacterStage();
         });
+    
 
         this.thumbnails = ['megamanThumb', 'linkThumb', 'kirbyThumb', 'sonicThumb', 'bulletkingThumb', 'redThumb'].map((thumbnailKey, index) => {
                 

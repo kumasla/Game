@@ -9,7 +9,7 @@ class MainMenu extends Phaser.Scene {
 
     preload(){ // 사전설정
         //this.load.image('background', 'assets/background/mountine.png');
-        this.load.image('mainBackground', 'assets/background/citypopBG.gif');
+        this.load.image('mainBackground', 'assets/background/citypopBG.png');
         this.load.image('button', 'assets/buttons/blue_button.png');
         this.load.audio('joinSceneVoice', 'assets/sounds/pixelHeroseVoiceMechanick.mp3');
         this.load.audio('lobyBGM', 'assets/sounds/lobyBGM.mp3');
