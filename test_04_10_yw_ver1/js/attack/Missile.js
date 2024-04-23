@@ -29,32 +29,11 @@ class Missile extends Phaser.Physics.Arcade.Sprite {
     }
 
     checkCollision(missile, player) {
-        // 파티클 이펙트 매니저 생성 및 파티클 이펙트 생성
-        const emitter = missile.scene.add.particles(missile.x, missile.y, 'effect', {
-            speed: 0,
-            lifespan : 0
-        });
 
-
-          // 애니메이션 설정을 위한 구성 개체
-        const animConfig = {
-            anims: [
-                { key: 'effect', frames: [0, 1, 2], frameRate: 10, repeat: 0 }
-            ],
-            cycle: false,
-            quantity: 1
-        };
-
-         // 애니메이션 설정
-        emitter.setAnim(animConfig);
-
-       
+        this.scene.masterController.effectController.playEffectAnimation(missile.x,missile.y,'effect');
+        this.scene.masterController.soundController.playEffectSound('swordeffect');
     
-        // 파티클 이펙트 터뜨리기
-        emitter.explode(1);
-        emitter.destroy();
-
-    
+            
         // 플레이어 데미지 입히기
         missile.scene.masterController.characterController.characterStatus.takeDamage(10);
     

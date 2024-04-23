@@ -1,0 +1,30 @@
+{
+    "lv1_0001":{
+        "animations": [
+            {
+                "key": "walk_Lv1_0001",
+                "texture": "Lv1_0001",
+                "frames": [0, 1],
+                "frameRate": 3,
+                "repeat": -1
+            },
+            {
+                "key": "attack_Lv1_0001",
+                "texture": "Lv1_0001",
+                "frames": [2, 3, 4],
+                "frameRate": 5,
+                "repeat": 0
+            }
+        ]
+    },
+    "lv1_0002":{
+        "animations":[
+            {
+                "key":"walk",
+                "frames": [{ "key": "lv1_0002", "frame": 0 }, { "key": "lv1_0002", "frame": 1 }],
+                "frameRate":3,
+                "repeat":-1
+            }
+        ]
+    }
+}

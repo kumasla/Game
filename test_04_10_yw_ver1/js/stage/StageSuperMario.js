@@ -44,22 +44,8 @@
             this.load.spritesheet('effect', 'assets/attack/effect.png',{ frameWidth: 22, frameHeight: 22 });
             this.load.spritesheet('bonusBox', 'assets/item/itemBox.png',{ frameWidth: 34, frameHeight: 46 });
 
-            this.load.spritesheet('monster1', 'assets/monster/굼바(마리오).png', {
-                frameWidth: 16,
-                frameHeight: 16,
-            });
-            this.load.spritesheet('monster2', 'assets/monster/찐위들.png', {
-                frameWidth: 30,
-                frameHeight: 25
-            });
-            this.load.spritesheet('monster3', 'assets/monster/쿵쿵.png', {
-                frameWidth: 33,
-                frameHeight: 32
-            });
-            this.load.spritesheet('Lv1_0001', 'assets/monster/마즈피플.png', {
-                frameWidth: 72,
-                frameHeight: 45
-            });
+            //몬스터
+            this.load.json('spriteData', 'monster/MonsterSprite.json');
 
 
             // 보스
@@ -95,7 +81,10 @@
         create() {
             // 사운드
             this.bgm = this.sound.add('standardBGM', { loop: true, volume: 0.3});
-            this.bgm.play();
+            this.bgm.play();   
+
+            //몬스터
+            const animationsData = this.cache.json.get('monsterAnimations');
 
             this.pauseBgm = this.sound.add('Game-selectBGM', {volume: 0.3});
 

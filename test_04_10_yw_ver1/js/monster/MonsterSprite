@@ -1,0 +1,28 @@
+{
+  "spritesheets": [
+    {
+        "key": "Lv1_0001",
+        "path": "assets/monster/마즈피플.png",
+        "frameWidth": 72,
+        "frameHeight": 45
+    },
+    {
+      "key": "Lv1_0002",
+      "path": "assets/monster/굼바(마리오).png",
+      "frameWidth": 16,
+      "frameHeight": 16
+    },
+    {
+      "key": "monster2",
+      "path": "assets/monster/찐위들.png",
+      "frameWidth": 30,
+      "frameHeight": 25
+    },
+    {
+      "key": "monster3",
+      "path": "assets/monster/쿵쿵.png",
+      "frameWidth": 30,
+      "frameHeight": 32
+    }
+  ]
+}
