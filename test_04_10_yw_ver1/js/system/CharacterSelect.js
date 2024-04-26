@@ -20,7 +20,7 @@ class CharacterSelect extends Phaser.Scene {
     preload() {
         //this.load.image('selectBackground', "assets/background/characterSelect.png");
         this.load.image('megamanThumb', "assets/characterThumbnail/megaman2.png");
-        this.load.image('linkThumb', "assets/characterThumbnail/link2.png");
+        this.load.image('linkThumb', "assets/characterThumbnail/link3.png");
         this.load.image('kirbyThumb', "assets/characterThumbnail/kirby.png");
         this.load.image('sonicThumb', "assets/characterThumbnail/sonic.png");
         this.load.image('bulletkingThumb', "assets/characterThumbnail/bulletking.png");

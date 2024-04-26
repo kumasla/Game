@@ -15,6 +15,9 @@ class MasterController {
 
     // Create의 데이터 상속
     init(characterName) {
+        // 잘 넘어옴
+        console.log(characterName);
+
         // 모두 평등하게 기본 칼 하나 지급, 근데 메가맨은 대체 알파 ㅇㅇ
 
         //무기 이미지 로드
@@ -113,7 +116,7 @@ class MasterController {
     setupAfterLoad(weaponName) {
         this.weaponController.addWeapon("automaticRocketLauncher", 1);
         this.weaponController.addWeapon("automaticRocketLauncher", 1);
-        this.weaponController.addWeapon("rocketLancer", 2);
+        this.weaponController.addWeapon("justSword", 2);
         this.weaponController.addWeapon("rocketLancer", 2);
         this.weaponController.addWeapon("rocketLancer", 3);
         this.weaponController.addWeapon("rocketLancer", 3);

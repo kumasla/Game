@@ -5,7 +5,7 @@
             this.masterController;
             this.player;        
             this.stageTimer;
-            this.stageDuration = 30; // 스테이지 지속 시간 (초)
+            this.stageDuration = 100; // 스테이지 지속 시간 (초)
             this.currentStage = 1;
             this.timerText;
             this.timer;
@@ -36,8 +36,8 @@
             this.load.image('explosion', 'assets/effects/explosion.png');
             this.load.image('expBead', 'assets/attack/expBead.png');
             this.load.spritesheet('effect', 'assets/attack/effect.png',{ frameWidth: 22, frameHeight: 22 });
-            this.load.spritesheet('bonusBox', 'assets/item/itemBox.png',{ frameWidth: 32, frameHeight: 32 });
-            
+            this.load.spritesheet('bonusBox', 'assets/item/itemBox.png',{ frameWidth: 34, frameHeight: 46 });
+
             //Lv1
             this.load.spritesheet('Lv1_0001', 'assets/monster/마즈피플.png', {frameWidth: 72,frameHeight: 45});
             this.load.spritesheet('Lv1_0002', 'assets/monster/굼바(마리오).png', {frameWidth: 16,frameHeight: 16,});
@@ -50,6 +50,8 @@
 
 
             this.load.json('monsterData', 'js/monster/monsterData.json');
+
+
             // 보스
             this.load.spritesheet('bossSprite', 'assets/boss/가논(젤다).png', {
                 frameWidth: 33,
@@ -85,9 +87,11 @@
             this.characterName = data.characterName;
             if(this.player){
                 this.player.destroy();
+                console.log(123);
             }
             this.player = null;
 
+            console.log(this.player);
             // 사운드
             this.bgm = this.sound.add('standardBGM', { loop: true, volume: 0.3});
             this.bgm.play();
@@ -219,6 +223,7 @@
         //cre 끝        // update 시작
 
         update() {
+            // 이 부분 정상작동 체크
             if(!this.paused) {
                 this.masterController.update();
             }

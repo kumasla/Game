@@ -202,20 +202,24 @@ class WeaponController{
 
         //return 받아온 캐릭터의 정보로 무기의 정보를 업데이트
         this.updateWeaponData(characterData);
+        console.log(this.weapons);
     }
 
     //무기 합체 메소드
+    // 비동기 처리 실패 시 응답?
     combineWeapon(status, change){
         //꽉 찬 상태일때 자동 합체 메소드
         if(status == "full"){
             this.weapons[change].grade++;
-            return "combine";
+
         }else{ // 장비창에서 합성을 눌렀을때 (이때는 status 아무거나 보내주시고 무기 이름 보내주시면 됩니다) 제일 마지막 인덱스에 있는 무기를 제거하고 그 앞의 무기의 등급을 상승시킵니다
             let combineIndex = this.weapons.map((weapon, index) => weapon.name === change ? index : -1).filter(index => index !== -1);
             combineIndex.reverse();
             this.weapons[combineIndex[1]].grade++;
-            this.removeWeapon(combineIndex[0]);
+            this.deleteWeapon(combineIndex[0]);
         }
+
+        return this.weapons;
     }
 
 
@@ -233,7 +237,7 @@ class WeaponController{
                 delete this.ownTag[tag];
             }
         }
-        //태그로인한 추가 스테이터스를 태그스테이터스 업데이트(addWeapon으로 return / removeWeapon으로 return)
+        //태그로인한 추가 스테이터스를 태그스테이터스 업데이트(addWeapon으로 return / deleteWeapon으로 return)
         return this.updateTagStatus();
     }
 
@@ -284,13 +288,17 @@ class WeaponController{
 
 
     //무기 제거용 함수
-    removeWeapon(index){
+    deleteWeapon(index){
+        const removerWeaponTag = this.weapons[index].tag;
+ 
+        this.updateWeaponData(this.updateOwnTag("remove", removerWeaponTag));
+        this.weapons[index].image.destroy();
         this.weapons.splice(index, 1);
-        this.updateWeaponData(updateOwnTag("remove", selectedWeapon.tag));
     }
 
     //캐릭터의 데이터로 무기 객체의 정보 업데이트
     updateWeaponData(characterData){
+        console.log(characterData)
         //등급에 따라 데미지 배율을 설정함
         let gradeMultiplier;
         for(let i = 0; i < this.weapons.length; i++){
@@ -308,6 +316,7 @@ class WeaponController{
             this.weapons[i].range = characterData.range * this.weapons[i].rangeScale;
             this.weapons[i].nowFireRate = (this.weapons[i].fireRate/(characterData.attackSpeed/100));
             this.weapons[i].critical = characterData.critical;
+            this.weapons[i].absorption = characterData.absorption;
         }
     }
 

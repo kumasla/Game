@@ -14,11 +14,13 @@ class SoundController {
         this.scene.load.audio('rocketLauncherFireSound', 'assets/sounds/rocketLauncherFireSound.mp3');
     }
 
+    // volume 0~1, rate 기본이 1  0~2
+    // playEffectSound(soundName, volume, rate) 
     playEffectSound(soundName) {
         // 효과음 플레이어 생성 및 사운드 추가
         const effectSound = this.scene.sound.add(soundName);
 
-        //사운드 크기 조절
+        // 임의 조정했습니다.
         effectSound.setVolume(0.25);
         effectSound.setRate(2);
 

@@ -2,7 +2,7 @@ class CharacterStatus{
     constructor(scene, status){
         this.scene = scene;
         this.maxHealth = status.maxHealth;      //최대 체력
-        this.nowHealth = status.maxHealth;      //현재 체력 (스테이지 클리어시 자동으로 최대체력이 되도록 updateStatus에서 설정)
+        this.nowHealth = 100;      //현재 체력 (스테이지 클리어시 자동으로 최대체력이 되도록 updateStatus에서 설정)
         this.speed = status.speed;              //캐릭터 속도
         this.attackSpeed = status.attackSpeed;  //공격속도
         this.power = status.power;              //캐릭터의 공격력
@@ -37,6 +37,7 @@ class CharacterStatus{
             // 회피
         }else{
             //this.nowHealth -= damage;
+            this.nowHealth -= 1;
 
             //맞은 직후 회피율 100
             this.avoidance = 100;
@@ -51,8 +52,6 @@ class CharacterStatus{
 
             if(this.nowHealth <= 0){
                 return 'gameOver';
-            }else{
-
             }
         }
     }
@@ -94,9 +93,6 @@ class CharacterStatus{
         }
         this.scene.masterController.weaponController.updateWeaponData(this);
         this.nowHealth = this.maxHealth;
-
-        console.log("data : ", data);
-        console.log("this : ", this);
     }
 
     //슬라이딩할때 속도 조정을 위한 함수
@@ -169,5 +165,9 @@ class CharacterStatus{
 
     getPassives(){
         return this.ownPassive;
+    }
+
+    absorptionHealth(){
+        this.nowHealth += 2;
     }
 }

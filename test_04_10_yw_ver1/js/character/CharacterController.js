@@ -1,4 +1,6 @@
 //CharacterController - 오직 캐릭터의 움직임에 한해서만 정의함
+
+
 class CharacterController {
     constructor(scene, selectedCharacterName){
         this.scene = scene;
@@ -8,9 +10,13 @@ class CharacterController {
         this.selectedCharacterName = selectedCharacterName;
 
         // 잘넘어옴
+        console.log(selectedCharacterName);
+
         this.player = this.createCharacter(this.getCharacterInfo(selectedCharacterName));
 
         this.characterStatus = new CharacterStatus(this.scene, this.getCharacterInfo(selectedCharacterName));
+
+        console.log(this.player);
 
         this.scene.physics.add.existing(this.player);
         this.player.setScale(this.getCharacterInfo(selectedCharacterName).scale)

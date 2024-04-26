@@ -9,7 +9,7 @@ class MonsterController {
         this.circlePatternTimer = 0; //몬스터 원형 패턴
         this.player = player;
         this.stageNum = 1;
-        this.monsterNumbers = [[1, 1, 1], [1, 1, 1], [1, 1, 1],[1,1,1],[1,1,1],[1,1,5]]; // 첫 레벨을 제외하고 각 스테이지별로 생성될 몬스터의 수
+        this.monsterNumbers = [[100, 100, 100], [100, 100, 100], [100, 100, 100],[100, 100, 100],[100, 100, 100],[100, 100, 100]]; // 첫 레벨을 제외하고 각 스테이지별로 생성될 몬스터의 수
         this.nowMonsterNum = 0;
         this.stateMonsterLevel = 0;
         //this.createBoss();

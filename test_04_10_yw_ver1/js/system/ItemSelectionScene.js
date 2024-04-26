@@ -267,7 +267,7 @@ class ItemSelectionScene extends Phaser.Scene {
         if(inter == 0) {
             const x = (inter % 5) * spacing;
             const y = (Math.floor(inter / 5) + 3) * spacing;
-            const alretText = this.add.text(x, y, '패시브가 없습니다.', {fill: '#000000', fontSize: '32px'});
+            const alretText = this.add.text(x, y, '패시브가 없습니다.', {fill: '#8A2BE2', fontSize: '32px'});
             this.passivesContainer.add(alretText);
         }
 
@@ -324,11 +324,25 @@ class ItemSelectionScene extends Phaser.Scene {
     }
 
     showWeaponOptions(index) {
-        // 위치 어디에다 띄어야 하냐
-        const optionsText = this.add.text(100, 100, '무기 작업을 선택하세요:', { fontSize: '24px', fill: '#ffffff' });
-        const enhanceText = this.add.text(100, 150, '1. 무기 강화하기', { fontSize: '20px', fill: '#ffffff' }).setInteractive();
-        const removeText = this.add.text(100, 200, '2. 무기 제거하기', { fontSize: '20px', fill: '#ffffff' }).setInteractive();
-    
+        const weaponContainerX = this.weaponsContainer.x;
+        const weaponContainerY = this.weaponsContainer.y;
+
+        const selectedWeaponImage = this.weaponsContainer.getAt(index);
+
+        const x = selectedWeaponImage.x + weaponContainerX;
+        const y = selectedWeaponImage.y + weaponContainerY;
+
+        const optionsText = this.add.text(x, y - 50, '무기 작업을 선택하세요(취소)', { fontSize: '24px', fill: '#ffffff' }).setInteractive();
+        const enhanceText = this.add.text(x, y, '1. 무기 강화하기', { fontSize: '20px', fill: '#ffffff' }).setInteractive();
+        enhanceText.setY(enhanceText.y + enhanceText.height / 2);
+        const removeText = this.add.text(x, y + 50, '2. 무기 제거하기', { fontSize: '20px', fill: '#ffffff' }).setInteractive();
+        removeText.setY(removeText.y + removeText.height / 2);
+
+        optionsText.on('pointerdown', () =>{
+            optionsText.destroy();
+            enhanceText.destroy();
+            removeText.destroy();
+        });
 
         enhanceText.on('pointerdown', () => {
             this.weaponClick(index);
@@ -351,13 +365,25 @@ class ItemSelectionScene extends Phaser.Scene {
     weaponClick(index) {
         const clickedWeapon = this.weapons[index];
 
-        console.log(clickedWeapon);
         const matchWeapon = this.weapons.find((weapon, i) => i !== index && weapon.name === clickedWeapon.name && weapon.grade === clickedWeapon.grade);
 
         if(matchWeapon){
-            // 무기 강화 메소드 호출
-            console.log('무기 강화할 수 있습니다.');
+            // 무기 강화 및 합성 후의 weapons 반환
+            let controllWeapons = this.masterController.weaponController.combineWeapon('combine', clickedWeapon.name);
+            
+            this.weapons = controllWeapons;
+
+            for(let i = 0; i < this.weaponsContainer.length; i++) {
+                const weaponImage = this.weaponsContainer.getAt(i);
+                weaponImage.destroy();
+            }
+
+            this.weaponsContainer.removeAll(true);
+            
+            this.createWeaponSlots();
+
         } else {
+            //이거는 좀 뭔가 그 트윈스 알림마냥 강화 못한다고 꼽주기
             console.log('무기 강화할 수 없습니다.');
         }
     }

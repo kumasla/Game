@@ -78,8 +78,19 @@ class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
 
         // 범위 안 몬스터들에게 데미지 부여
         inRangeMonster.forEach(monster => {
-            monster.hit(weaponDamage);
+            if(Math.floor(Math.random() * 100) + 1 <= this.weapon.critical){
+                monster.hit(2 * weaponDamage);
+            }else{
+                monster.hit(weaponDamage);
+            }
+
+            if(Math.floor(Math.random() * 100) + 1 <= this.weapon.absorption){
+                console.log(this.sceneData.masterController.characterController.characterStatus)
+                this.sceneData.masterController.characterController.characterStatus.absorptionHealth();
+            }
         });
+
+        
 
         /* // 파티클 이펙트 생성
         const particles = this.scene.add.particles('bombEffect');
@@ -99,7 +110,11 @@ class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
 
     // 무기가 몬스터 때리기
     checkCollisionJustMissile(missile, monster, damage) {
-        monster.hit(damage);
+        if(Math.floor(Math.random() * 100) + 1 <= this.weapon.critical){
+            monster.hit(2 * damage);
+        }else{
+            monster.hit(damage);
+        }
         missile.destroy();
     }
 
