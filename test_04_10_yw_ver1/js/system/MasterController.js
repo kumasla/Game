@@ -3,6 +3,8 @@ class MasterController {
         this.playerManager;
         this.monsterController;
         this.characterController; //캐릭터 컨트롤러 - 김용우
+        this.effectController; // 이팩트 컨트롤러 - 최재영
+        this.soundController; // 사운드 컨트롤러 - 최재영
         this.gameDataManager;
         this.sceneData = scene;
         this.bgm = bgm;
@@ -13,7 +15,6 @@ class MasterController {
 
     // Create의 데이터 상속
     init(characterName) {
-
         // 모두 평등하게 기본 칼 하나 지급, 근데 메가맨은 대체 알파 ㅇㅇ
 
         //무기 이미지 로드
@@ -66,6 +67,12 @@ class MasterController {
         //무기 컨트롤러 생성
         this.weaponController = new WeaponController(this.sceneData, this.player);
 
+        //이펙트 컨트롤러 생성
+        this.effectController = new EffectController(this.sceneData);
+        
+        //사운드 컨트롤러 생성
+        this.soundController = new SoundController(this.sceneData);
+
         // 게임 관련된 정보 저장 - 몬스터 킬 수, 타이머 저장 등 ㅇㅇ
         this.gameDataManager = new GameDataManager();
 
@@ -104,12 +111,13 @@ class MasterController {
 
     //첫무기를 웨펀컨트롤러에 추가
     setupAfterLoad(weaponName) {
-        this.weaponController.addWeapon("kar98");
-        this.weaponController.addWeapon(weaponName);
-        this.weaponController.addWeapon("kar98");
-        this.weaponController.addWeapon("kar98");
-        this.weaponController.addWeapon("kar98");
-        this.weaponController.addWeapon("kar98");
+        this.weaponController.addWeapon("automaticRocketLauncher", 1);
+        this.weaponController.addWeapon("automaticRocketLauncher", 1);
+        this.weaponController.addWeapon("rocketLancer", 2);
+        this.weaponController.addWeapon("rocketLancer", 2);
+        this.weaponController.addWeapon("rocketLancer", 3);
+        this.weaponController.addWeapon("rocketLancer", 3);
+        this.weaponController.addWeapon("rocketLancer", 2);
     }
 
     getCharacterStatus() {

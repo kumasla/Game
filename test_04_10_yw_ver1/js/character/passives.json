@@ -4,6 +4,7 @@
         "type": "passive",
         "defence": "+3",
         "power": "+2",
+        "grade" : "nomal",
         "imagePath": "assets/item/불꽃의갑옷.png",
         "activate" : false
     },
@@ -12,6 +13,7 @@
         "type": "passive",
         "speed": "+4%",
         "defence": "+1",
+        "grade" : "nomal",
         "imagePath": "assets/item/하얀장갑.png",
         "activate" : false
     },
@@ -20,6 +22,7 @@
         "type": "passive",
         "speed": "+2%",
         "critical": "+2%",
+        "grade" : "nomal",
         "imagePath": "assets/item/칠흑의망토.png",
         "activate" : false
     },
@@ -28,6 +31,7 @@
         "type": "passive",
         "power": "+1",
         "speed": "+2%",
+        "grade" : "nomal",
         "imagePath": "assets/item/바람의목걸이.png",
         "activate" : false
     },
@@ -36,6 +40,7 @@
         "type": "passive",
         "avoidance": "+4%",
         "maxHealth": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/혼돈의부적.png",
         "activate" : false
     },
@@ -44,6 +49,7 @@
         "type": "passive",
         "speed": "+3%",
         "luck": "-5%",
+        "grade" : "nomal",
         "imagePath": "assets/item/침묵의갑옷.png",
         "activate" : false
     },
@@ -52,6 +58,7 @@
         "type": "passive",
         "speed": "+5%",
         "power": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/얼음의왕관.png",
         "activate" : false
     },
@@ -60,6 +67,7 @@
         "type": "passive",
         "speed": "+4%",
         "defence": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/신속의장화.png",
         "activate" : false
     },
@@ -68,6 +76,7 @@
         "type": "passive",
         "defence": "+3%",
         "critical": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/악마숭배자의가면.png",
         "activate" : false
     },
@@ -76,6 +85,7 @@
         "type": "passive",
         "speed": "+4%",
         "avoidance": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/바람의흉터.png",
         "activate" : false
     },
@@ -84,6 +94,7 @@
         "type": "passive",
         "maxHealth": "+4%",
         "speed": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/구리반지.png",
         "activate" : false
     },
@@ -92,6 +103,7 @@
         "type": "passive",
         "defence": "+3%",
         "critical": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/강철머리보호대.png",
         "activate" : false
     },
@@ -100,6 +112,7 @@
         "type": "passive",
         "avoidance": "+4%",
         "speed": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/냉동실에잠시넣은검.png",
         "activate" : false
     },
@@ -108,6 +121,7 @@
         "type": "passive",
         "power": "+3%",
         "speed": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/황금의지팡이.png",
         "activate" : false
     },
@@ -116,6 +130,7 @@
         "type": "passive",
         "maxHealth": "+5%",
         "power": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/암흑이섞인신발.png",
         "activate" : false
     },
@@ -124,6 +139,7 @@
         "type": "passive",
         "avoidance": "+3%",
         "speed": "-5%",
+        "grade" : "nomal",
         "imagePath": "assets/item/불꽃의벽.png",
         "activate" : false
     },
@@ -132,6 +148,7 @@
         "type": "passive",
         "defence": "+4%",
         "maxHealth": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/이끼낀팔찌.png",
         "activate" : false
     },
@@ -140,6 +157,7 @@
         "type": "passive",
         "critical": "+5%",
         "power": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/혼돈의반지.png",
         "activate" : false
     },
@@ -148,6 +166,7 @@
         "type": "passive",
         "speed": "+4%",
         "avoidance": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/신속의부적.png",
         "activate" : false
     },
@@ -156,6 +175,7 @@
         "type": "passive",
         "maxHealth": "+3%",
         "critical": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/녹슬어버린투구.png",
         "activate" : false
     },
@@ -164,6 +184,7 @@
         "type": "passive",
         "speed": "+5%",
         "avoidance": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/재빠른검기.png",
         "activate" : false
     },
@@ -172,6 +193,7 @@
         "type": "passive",
         "defence": "+3%",
         "power": "-4%",
+        "grade" : "nomal",
         "imagePath": "assets/item/독기를품은봉지.png",
         "activate" : false
     },
@@ -180,6 +202,7 @@
         "type": "passive",
         "speed": "-4%",
         "maxHealth": "+3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/너무무거운갑옷.png",
         "activate" : false
     },
@@ -188,6 +211,7 @@
         "type": "passive",
         "defence": "+3",
         "speed": "+2%",
+        "grade" : "nomal",
         "imagePath": "assets/item/황금날개.png",
         "activate" : false
     },
@@ -196,6 +220,7 @@
         "type": "passive",
         "speed": "+4%",
         "defence": "-3%",
+        "grade" : "nomal",
         "imagePath": "assets/item/얼어붙은방패.png",
         "activate" : false
     },
@@ -205,6 +230,7 @@
         "maxHealth": "+4%",
         "power": "+3%",
         "speed": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/불에달궈진검.png",
         "activate" : false
     },
@@ -214,6 +240,7 @@
         "attackSpeed": "+3%",
         "power": "+4%",
         "avoidance": "-5%",
+        "grade" : "rare",
         "imagePath": "assets/item/용의심장.png",
         "activate" : false
     },
@@ -223,6 +250,7 @@
         "speed": "+5%",
         "critical": "+3%",
         "defence": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/번개의창.png",
         "activate" : false
     },
@@ -232,6 +260,7 @@
         "maxHealth": "+4%",
         "defence": "+3%",
         "luck": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/잘관리된투구.png",
         "activate" : false
     },
@@ -241,6 +270,7 @@
         "speed": "+3%",
         "critical": "+4%",
         "power": "-5%",
+        "grade" : "rare",
         "imagePath": "assets/item/괜찮은스테로이드.png",
         "activate" : false
     },
@@ -250,6 +280,7 @@
         "maxHealth": "+5%",
         "avoidance": "+3%",
         "attackSpeed": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/악마의손자국.png",
         "activate" : false
     },
@@ -259,6 +290,7 @@
         "speed": "+4%",
         "defence": "+3%",
         "critical": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/빛나는태양.png",
         "activate" : false
     },
@@ -268,6 +300,7 @@
         "speed": "+3%",
         "avoidance": "+4%",
         "maxHealth": "-5%",
+        "grade" : "rare",
         "imagePath": "assets/item/추진력강화.png",
         "activate" : false
     },
@@ -277,6 +310,7 @@
         "power": "+4%",
         "avoidance": "+3%",
         "attackSpeed": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/은반지.png",
         "activate" : false
     },
@@ -286,6 +320,7 @@
         "avoidance": "+5%",
         "defence": "+3%",
         "speed": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/거미줄망토.png",
         "activate" : false
     },
@@ -295,25 +330,28 @@
         "speed": "+4%",
         "maxHealth": "+3%",
         "power": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/내리치는낙뢰.png",
         "activate" : false
     },
-    "황금의망토": {
-        "name": "황금의망토",
+    "신의물방울": {
+        "name": "신의물방울",
         "type": "passive",
         "attackSpeed": "+3%",
         "avoidance": "+4%",
         "speed": "-5%",
-        "imagePath": "assets/item/.png",
+        "grade" : "rare",
+        "imagePath": "assets/item/신의물방울.png",
         "activate" : false
     },
-    "운의부적": {
-        "name": "운의부적",
+    "독사의피": {
+        "name": "독사의피",
         "type": "passive",
         "power": "+4%",
         "speed": "-3%",
         "maxHealth": "+5%",
-        "imagePath": "assets/item/.png",
+        "grade" : "rare",
+        "imagePath": "assets/item/독사의피.png",
         "activate" : false
     },
     "마비의지팡이": {
@@ -322,6 +360,7 @@
         "speed": "+5%",
         "avoidance": "-4%",
         "defence": "+3%",
+        "grade" : "rare",
         "imagePath": "assets/item/마비의지팡이.png",
         "activate" : false
     },
@@ -331,6 +370,7 @@
         "avoidance": "+3%",
         "power": "+4%",
         "maxHealth": "-5%",
+        "grade" : "rare",
         "imagePath": "assets/item/빛나다불붙은반지.png",
         "activate" : false
     },
@@ -340,6 +380,7 @@
         "critical": "+4%",
         "attackSpeed": "+3%",
         "speed": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/왕에게받은뱃지.png",
         "activate" : false
     },
@@ -349,6 +390,7 @@
         "defence": "+4%",
         "speed": "+3%",
         "critical": "-4%",
+        "grade" : "rare",
         "imagePath": "assets/item/무도인의띠.png",
         "activate" : false
     },
@@ -358,7 +400,8 @@
         "attackSpeed": "+4%",
         "maxHealth": "-3%",
         "power": "+5%",
-        "imagePath": "assets/item/.png",
+        "grade" : "rare",
+        "imagePath": "assets/item/빛나는방패.png",
         "activate" : false
     },
     "은의지팡이": {
@@ -367,6 +410,7 @@
         "avoidance": "+5%",
         "power": "-4%",
         "speed": "+3%",
+        "grade" : "rare",
         "imagePath": "assets/item/은의지팡이.png",
         "activate" : false
     },
@@ -376,6 +420,7 @@
         "defence": "+3%",
         "critical": "+4%",
         "speed": "-5%",
+        "grade" : "rare",
         "imagePath": "assets/item/옆동네냥이뼈목걸이.png",
         "activate" : false
     },
@@ -386,6 +431,7 @@
         "speed": "-7%",
         "critical": "+9%",
         "maxHealth": "+4%",
+        "grade" : "epic",
         "imagePath": "assets/item/천둥의일격.png",
         "activate" : false
     },
@@ -396,6 +442,7 @@
         "avoidance": "-6%",
         "power": "+8%",
         "luck": "+3%",
+        "grade" : "epic",
         "imagePath": "assets/item/순교자가남긴책.png",
         "activate" : false
     },
@@ -406,6 +453,7 @@
         "defence": "-5%",
         "power": "+6%",
         "critical": "+4%",
+        "grade" : "epic",
         "imagePath": "assets/item/용의포효를담은총.png",
         "activate" : false
     },
@@ -416,6 +464,7 @@
         "critical": "+5%",
         "avoidance": "-7%",
         "defence": "+3%",
+        "grade" : "epic",
         "imagePath": "assets/item/혼돈의지팡이.png",
         "activate" : false
     },
@@ -426,6 +475,7 @@
         "avoidance": "-6%",
         "speed": "+4%",
         "maxHealth": "+5%",
+        "grade" : "epic",
         "imagePath": "assets/item/악마와의계약.png",
         "activate" : false
     },
@@ -436,6 +486,7 @@
         "attackSpeed": "-5%",
         "luck": "+4%",
         "critical": "+6%",
+        "grade" : "epic",
         "imagePath": "assets/item/풀플레이트아머.png",
         "activate" : false
     },
@@ -446,6 +497,7 @@
         "speed": "+6%",
         "defence": "-5%",
         "maxHealth": "+4%",
+        "grade" : "epic",
         "imagePath": "assets/item/선악과.png",
         "activate" : false
     },
@@ -456,6 +508,7 @@
         "maxHealth": "+6%",
         "avoidance": "-7%",
         "power": "+4%",
+        "grade" : "epic",
         "imagePath": "assets/item/신성한보호막.png",
         "activate" : false
     },
@@ -466,6 +519,7 @@
         "speed": "-6%",
         "avoidance": "+5%",
         "attackSpeed": "+3%",
+        "grade" : "epic",
         "imagePath": "assets/item/레일건.png",
         "activate" : false
     },
@@ -476,6 +530,7 @@
         "avoidance": "-6%",
         "maxHealth": "+7%",
         "luck": "+4%",
+        "grade" : "epic",
         "imagePath": "assets/item/신성한구역.png",
         "activate" : false
     },
@@ -486,6 +541,7 @@
         "avoidance": "-6%",
         "maxHealth": "+8%",
         "power": "+5%",
+        "grade" : "epic",
         "imagePath": "assets/item/반짝이는별.png",
         "activate" : false
     },
@@ -496,6 +552,7 @@
         "maxHealth": "-6%",
         "attackSpeed": "+7%",
         "critical": "+4%",
+        "grade" : "epic",
         "imagePath": "assets/item/악마의심장.png",
         "activate" : false
     },
@@ -506,6 +563,7 @@
         "avoidance": "-7%",
         "maxHealth": "+6%",
         "power": "+5%",
+        "grade" : "epic",
         "imagePath": "assets/item/운명의신발.png",
         "activate" : false
     },
@@ -516,6 +574,7 @@
         "speed": "-7%",
         "attackSpeed": "+6%",
         "power": "+4%",
+        "grade" : "epic",
         "imagePath": "assets/item/불사조의깃털.png",
         "activate" : false
     },
@@ -526,6 +585,7 @@
         "avoidance": "-8%",
         "speed": "+6%",
         "defence": "+5%",
+        "grade" : "epic",
         "imagePath": "assets/item/혼돈의제물.png",
         "activate" : false
     }

@@ -8,6 +8,7 @@ class CharacterSelect extends Phaser.Scene {
         this.lastMoveTime = 0;
         this.bgm;
         this.characters = {};
+        this.selectedCharacterName;
         this.descriptionText;
 
         this.descriptionContainer;
@@ -176,12 +177,12 @@ class CharacterSelect extends Phaser.Scene {
     }
 
     updateCharacterDescription() {
-        const selectedCharacterName = this.getCharacterNameByIndex(this.selectedIndex);
+        this.selectedCharacterName = this.getCharacterNameByIndex(this.selectedIndex);
 
-        const description = this.characters[selectedCharacterName].description;
+        const description = this.characters[this.selectedCharacterName].description;
         this.descriptionText.setText(description);
 
-        const stats = this.characters[selectedCharacterName].descriptionStats;
+        const stats = this.characters[this.selectedCharacterName].descriptionStats;
 
         this.updateCharacterStats(stats);
     }
@@ -254,7 +255,7 @@ class CharacterSelect extends Phaser.Scene {
 
         let selectedCharacterName = null;
         if(this.selectedIndex != -1) {
-            selectedCharacterName = this.getCharacterNameByIndex(this.selectedIndex);
+            this.selectedCharacterName = this.getCharacterNameByIndex(this.selectedIndex);
         } else {  
             const messageText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, '캐릭터를 선택해주세요!!', {
                 fontSize: '36px',
@@ -283,9 +284,15 @@ class CharacterSelect extends Phaser.Scene {
             });
         }
     
-        if (selectedCharacterName != null) {
+        // 여긴 초기화도 잘 해놨고 선택된 캐릭터 이름 잘 보냄.
+        if (this.selectedCharacterName != null) {
             this.bgm.stop();
-            this.scene.start('StageSuperMario', { characterName: selectedCharacterName });
+            this.scene.stop();
+            this.scene.start('StageSuperMario', { characterName: this.selectedCharacterName });
+
+            this.selectedCharacterName = null;
+
+            this.selectedIndex = -1;
         }
     }
 

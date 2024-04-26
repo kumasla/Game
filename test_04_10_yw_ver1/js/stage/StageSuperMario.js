@@ -5,7 +5,7 @@
             this.masterController;
             this.player;        
             this.stageTimer;
-            this.stageDuration = 5; // 스테이지 지속 시간 (초)
+            this.stageDuration = 30; // 스테이지 지속 시간 (초)
             this.currentStage = 1;
             this.timerText;
             this.timer;
@@ -20,12 +20,6 @@
             this.pauseBgm;
             this.paused =false; //일시정지 유무
         }
-
-        init(data) {
-            this.characterName = data.characterName;
-            
-        }
-        
 
         preload() {
             // 맵.. 일단 단일로 했음.
@@ -42,12 +36,20 @@
             this.load.image('explosion', 'assets/effects/explosion.png');
             this.load.image('expBead', 'assets/attack/expBead.png');
             this.load.spritesheet('effect', 'assets/attack/effect.png',{ frameWidth: 22, frameHeight: 22 });
-            this.load.spritesheet('bonusBox', 'assets/item/itemBox.png',{ frameWidth: 34, frameHeight: 46 });
+            this.load.spritesheet('bonusBox', 'assets/item/itemBox.png',{ frameWidth: 32, frameHeight: 32 });
+            
+            //Lv1
+            this.load.spritesheet('Lv1_0001', 'assets/monster/마즈피플.png', {frameWidth: 72,frameHeight: 45});
+            this.load.spritesheet('Lv1_0002', 'assets/monster/굼바(마리오).png', {frameWidth: 16,frameHeight: 16,});
 
-            //몬스터
-            this.load.json('spriteData', 'monster/MonsterSprite.json');
+            //Lv2
+            this.load.spritesheet('Lv2_0001', 'assets/monster/찐위들.png', {frameWidth: 30,frameHeight: 25});
+
+            //Lv3
+            this.load.spritesheet('Lv3_0001', 'assets/monster/쿵쿵.png', {frameWidth: 30,frameHeight: 32});
 
 
+            this.load.json('monsterData', 'js/monster/monsterData.json');
             // 보스
             this.load.spritesheet('bossSprite', 'assets/boss/가논(젤다).png', {
                 frameWidth: 33,
@@ -75,16 +77,20 @@
             this.load.audio('standardBGM', 'assets/sounds/SonicStageBGM.mp3');
             this.load.audio('sniperSound', 'assets/sounds/sniperSound.mp3');
 
-            
+            //무기 이펙트
+            this.load.spritesheet('bombEffect', 'assests/effects/bombEffect.png',{frameWidth: 192, frameHeight: 192});
         }
 
-        create() {
+        create(data) {
+            this.characterName = data.characterName;
+            if(this.player){
+                this.player.destroy();
+            }
+            this.player = null;
+
             // 사운드
             this.bgm = this.sound.add('standardBGM', { loop: true, volume: 0.3});
-            this.bgm.play();   
-
-            //몬스터
-            const animationsData = this.cache.json.get('monsterAnimations');
+            this.bgm.play();
 
             this.pauseBgm = this.sound.add('Game-selectBGM', {volume: 0.3});
 
@@ -142,7 +148,7 @@
 
                 this.pauseBgm.play();
 
-                this.scene.launch('PauseMenu', { player:this.player, bgm:this.bgm, characterStatus: characterStatus, weapons:weapons, passives: passives});
+                this.scene.launch('VictoryScene', { player:this.player, bgm:this.bgm, characterStatus: characterStatus, weapons:weapons, passives: passives});
                 this.scene.pause();
                 this.bgm.pause();
             });

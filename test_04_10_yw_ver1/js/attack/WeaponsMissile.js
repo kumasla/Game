@@ -62,6 +62,7 @@ class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
     //폭발 중화기
     checkCollisionBomb(missile, monster, damage){
         this.explodeMissile(monster.x, monster.y, damage);
+        //this.sceneData.masterController.effectController.playEffectAnimation(monster.x, monster.y, "bombEffect");
         missile.destroy();
     }
 

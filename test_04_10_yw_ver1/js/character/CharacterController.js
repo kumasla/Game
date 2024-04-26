@@ -1,6 +1,4 @@
 //CharacterController - 오직 캐릭터의 움직임에 한해서만 정의함
-
-
 class CharacterController {
     constructor(scene, selectedCharacterName){
         this.scene = scene;
@@ -9,6 +7,7 @@ class CharacterController {
 
         this.selectedCharacterName = selectedCharacterName;
 
+        // 잘넘어옴
         this.player = this.createCharacter(this.getCharacterInfo(selectedCharacterName));
 
         this.characterStatus = new CharacterStatus(this.scene, this.getCharacterInfo(selectedCharacterName));
@@ -46,6 +45,19 @@ class CharacterController {
     }
 
     createCharacter(characterData){
+
+        const spriteKey = characterData.spriteKey;
+
+        const player = this.scene.physics.add.sprite(0, 0, characterData.spriteKey);
+
+        // 기존 애니메이션 키 할당이 되어있다면 제거해줘야 함 ㅋㅋ
+        Object.keys(characterData.animations).forEach(animationKey => {
+            const animationData = characterData.animations[animationKey];
+            if (this.scene.anims.exists(`${animationKey}`)) {
+                this.scene.anims.remove(`${animationKey}`);
+            }
+        });
+
         this.scene.anims.create({
             key : "move",
             frames : this.scene.anims.generateFrameNumbers(characterData.spriteKey,
@@ -70,7 +82,6 @@ class CharacterController {
             repeat : characterData.animations.slide.repeat
         });
 
-        const player = this.scene.physics.add.sprite(0, 0, characterData.spriteKey);
         return player;
     }
 

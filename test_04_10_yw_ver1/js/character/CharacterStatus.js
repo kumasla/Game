@@ -79,7 +79,7 @@ class CharacterStatus{
                 // => 최종뎀 ㅇㅇ
 
                 //스테이터스 업데이트 완료
-                if(status != 'name' && status != 'imagePath' && status != 'type' && status != 'activate'){
+                if(status != 'name' && status != 'imagePath' && status != 'type' && status != 'activate' && status != 'grade'){
                     switch(true){
                         case status == 'critical' : case status == 'avoidance' : case status == 'luck' : case status == 'defence' :
                             this[status] += parseFloat(data[status]);

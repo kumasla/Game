@@ -9,21 +9,12 @@ class MonsterController {
         this.circlePatternTimer = 0; //몬스터 원형 패턴
         this.player = player;
         this.stageNum = 1;
-        this.monsterNumbers = [[0,0,0],[1, 1, 1], [0, 0, 0], [0, 0, 0],[1,1,1],[0,0,0],[1,1,5]]; // 각 스테이지별로 생성될 몬스터의 수
+        this.monsterNumbers = [[1, 1, 1], [1, 1, 1], [1, 1, 1],[1,1,1],[1,1,1],[1,1,5]]; // 첫 레벨을 제외하고 각 스테이지별로 생성될 몬스터의 수
         this.nowMonsterNum = 0;
         this.stateMonsterLevel = 0;
         //this.createBoss();
 
         this.divisions = 4; // 맵을 4x4로 분할한다고 가정
-
-
-        // 애니메이션 생성
-        this.scene.anims.create({
-            key: 'effect',
-            frames: this.scene.anims.generateFrameNumbers('effect', { start: 0, end: 4 }),
-            frameRate: 10,
-            repeat: -1
-        });
 
         this.setupCollisions();
 
@@ -61,6 +52,7 @@ class MonsterController {
     createCirclePatternMonster() {
         const centerX = this.player.x;
         const centerY = this.player.y;
+        const spawnKey= "Lv1_0001";
         let radius = 400; // 기본 원의 반지름
         let monstersCount = 10; // 생성할 몬스터의 수
     
@@ -89,7 +81,7 @@ class MonsterController {
             x = Phaser.Math.Clamp(x, 50, this.mapWidth-50);
             y = Phaser.Math.Clamp(y, 50, this.mapHeight-50);
     
-            this.spawnMonster(x, y);
+            this.spawnMonster(x, y,spawnKey,3);
         }
 
         this.lastPlayerPosition.x = centerX;
@@ -129,19 +121,19 @@ class MonsterController {
         });
     }
 
-    spawnMonster(x, y) {
-        let monster = new Lv1_0001(this.scene, x, y, this.player); // 항상 0001 유형의 몬스터 생성
+    spawnMonster(x, y,spawnKey,speed) {
+        const monsterInfo = this.getMonsterInfoBySpriteKey(spawnKey);
+        monsterInfo.speed = speed;
+        const monster = new Monster(this.scene, x, y, monsterInfo, this.player); // 항상 0001 유형의 몬스터 생성
         this.monstersGroup.add(monster);
         this.scene.physics.add.collider(this.monstersGroup, monster);
     }
 
     // 몬스터 생성 메서드
     createMonster() {
-        let monster;
-
         // 스테이지의 맞는 배열 가져오기
         let numMonstersOfType = this.monsterNumbers[this.stageNum];
-        
+        console.log(numMonstersOfType);
         // 현재 몬스터 생성된 수가 나와야할 몬스터 수보다 큰지 비교
         if (this.nowMonsterNum >= numMonstersOfType[this.stateMonsterLevel]) {
             // 크다면 다음 레벨 몬스터로 넘기고
@@ -155,51 +147,37 @@ class MonsterController {
           if (this.stateMonsterLevel > 2) {
             return 0;
         }
-
-        // 선택된 분할 영역 내에서 랜덤 위치 생성
+    
+        console.log(this.stateMonsterLevel);
         const { x: posX, y: posY } = this.getRandomSpawnPosition();
-
-
-        //let marker = this.scene.add.graphics();
-        // marker.fillStyle(0xFF0000, 0.5);
-        //marker.fillCircle(posX, posY, 50); 
-        
-
-        let monsterSprite = this.scene.add.sprite(posX, posY, 'effect');
-        monsterSprite.anims.play('effect'); // 애니메이션 재생
-
-        // 몬스터 생성 딜레이 시간 설정 (예: 3초 후)
-        const delay = 1000;
-
-        // 일정 시간이 지난 후에 몬스터 생성 함수를 호출합니다.
+        const monsterInfo = this.getMonsterInfoByLevel(this.stateMonsterLevel);
+    
         setTimeout(() => {
-            // 실제 몬스터를 생성합니다.
-            switch (this.stateMonsterLevel) {
-                case 0:
-                    monster = new Monster1(this.scene, posX, posY, this.player);
-                    break;
-                case 1:
-                    monster = new Monster2(this.scene, posX, posY, this.player);
-                    break;
-                case 2:
-                    monster = new Monster3(this.scene, posX, posY, this.player);
-                    break;
-                default:
-                    
-                    break;
-            }
-
-            // 생성이 완료 됬으면 현재 몬스터 수 증가
+            const monster = new Monster(this.scene, posX, posY, monsterInfo, this.player);
+            this.monstersGroup.add(monster);
+            this.scene.physics.add.collider(this.monstersGroup, monster);
             this.nowMonsterNum++;
-            this.scene.physics.add.collider(this.monstersGroup, monster); // 몬스터 그룹과 새로운 몬스터 간의 충돌 감지
-            this.monstersGroup.add(monster); // 생성된 몬스터를 그룹에 추가합니다.
-            this.monstersCreated++;
-
-            // 위치 표시를 제거합니다.
-           // marker.clear();
-           monsterSprite.destroy();
-        }, delay);
+        }, 1000);
     }
+
+    getMonsterInfoByLevel(level) {
+        const allMonstersData = this.scene.cache.json.get('monsterData');
+        const levelMonsters = Object.values(allMonstersData).filter(monster => monster.level === level+1);
+        
+        const pickedMonster = Phaser.Math.RND.pick(levelMonsters);
+        return pickedMonster;
+    }
+
+    getMonsterInfoBySpriteKey(spriteKey) {
+        const allMonstersData = this.scene.cache.json.get('monsterData');
+        const monsterInfo = allMonstersData[spriteKey];
+        return monsterInfo;
+    }
+    
+    
+    
+    
+    
 
     update() {
         this.circlePatternTimer++;

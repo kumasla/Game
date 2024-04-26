@@ -1,30 +1,48 @@
 class Monster extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, spriteKey, player) {
-    super(scene, x, y, spriteKey);
-    scene.add.existing(this);
-    scene.physics.add.existing(this);
+  constructor(scene, x, y, monsterInfo, player) {
+    super(scene, x, y, monsterInfo.spriteKey);
+    this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
     this.player = player;
-    this.scene = scene;
-    // 미사일과 대상의 충돌 설정
-    this.scene.physics.add.overlap(
-      this,
-      player, // 충돌 대상
-      this.checkCollision, // 충돌 처리 함수
-      null, // 콜백 컨텍스트
-      this // 호출 컨텍스트
-    );
 
-    this.expBeadGroup = scene.physics.add.group();
-    this.bonusBoxGroup = scene.physics.add.group();
+    //기본 속성 초기화
+    this.spriteKey = monsterInfo.spriteKey;
+    this.animations = monsterInfo.animations;
+    this.health = monsterInfo.health || 100;
+    this.speed = monsterInfo.speed || 20;
+    this.scale = monsterInfo.scale || 1;
+    this.attackRange = monsterInfo.attackRange || 300; // 공격 범위
+    this.attackCooldown = monsterInfo.attackCooldown || 3000; // 공격 쿨다운
+    this.lastAttackTime = 0; // 마지막 공격 시간 초기화
+    this.isAttacking = false; 
 
-    this.health = 10; // 몬스터의 체력
-    this.attack = 10; // 기본 공격력
-    this.speed = 100;
+
+    this.reverseFlip = monsterInfo.reverseFlip || false;
+
+    this.setScale(this.scale);
     this.setDepth(1);
-
+    this.setupAnimations(); 
   }
+ 
 
-  setupAnimations() {}
+  setupAnimations() {
+    Object.keys(this.animations).forEach(key => {
+      const anim = this.animations[key];
+      const fullAnimKey = this.spriteKey + '_' + key;
+      if (!this.scene.anims.exists(fullAnimKey)) {
+        this.scene.anims.create({
+          key: fullAnimKey,
+          frames: this.scene.anims.generateFrameNumbers(this.spriteKey, { 
+            start: anim.frames.start, 
+            end: anim.frames.end 
+          }),
+          frameRate: anim.framerate,
+          repeat: anim.repeat
+        });
+      }
+    });
+    this.play(this.spriteKey + '_move');
+  }
 
   update() {
     const speed = this.speed;
@@ -35,8 +53,40 @@ class Monster extends Phaser.Physics.Arcade.Sprite {
 
     // 플레이어를 향해 천천히 이동합니다.
     this.setVelocity((dx / distance) * speed, (dy / distance) * speed);
+
+    if (distance <= this.attackRange && !this.isAttacking && this.scene.time.now > this.lastAttackTime + this.attackCooldown) {
+      this.attack();
+    }
+
+    if (this.reverseFlip) {
+        this.setFlipX(this.player.x > this.x);
+    } else {
+        this.setFlipX(this.player.x < this.x);
+    }
   }
 
+  attack() {
+    this.isAttacking = true;
+    this.lastAttackTime = this.scene.time.now;
+    this.play(this.spriteKey + '_attack');
+
+    this.on('animationupdate', (animation, frame) => {
+      if (frame.index === 3 && this.isAttacking) { // 공격 애니메이션의 특정 프레임에서 공격 실행
+        this.attackAction();
+      }
+    });
+
+    this.once('animationcomplete', () => {
+      this.isAttacking = false;
+      this.play(this.spriteKey + '_move');
+    });
+  }
+
+  attackAction() {
+    const missile = new Missile(this.scene, this.x, this.y, 'missile');
+    this.scene.masterController.monsterController.missilesGroup.add(missile);
+    missile.fire(this.x, this.y, Phaser.Math.RadToDeg(Phaser.Math.Angle.Between(this.x, this.y, this.player.x, this.player.y)));
+  }
   // 이 부분 지금 플레이어와 몬스터가 부딪히면 몬스터가 데미지를 받네요..
   checkCollision(monster, player) {
     const masterController = this.scene.masterController;

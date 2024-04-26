@@ -1,5 +1,5 @@
 {
-    "lv1_0001":{
+    "Lv1_0001":{
         "animations": [
             {
                 "key": "walk_Lv1_0001",
@@ -17,11 +17,11 @@
             }
         ]
     },
-    "lv1_0002":{
+    "Lv1_0002":{
         "animations":[
             {
                 "key":"walk",
-                "frames": [{ "key": "lv1_0002", "frame": 0 }, { "key": "lv1_0002", "frame": 1 }],
+                "frames": [{ "key": "Lv1_0002", "frame": 0 }, { "key": "Lv1_0002", "frame": 1 }],
                 "frameRate":3,
                 "repeat":-1
             }

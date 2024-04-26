@@ -11,10 +11,16 @@ class EffectController{
             frameRate: 10,
             repeat: 0
         });
+
+        this.scene.anims.create({
+            key : 'bombEffect',
+            frames : this.scene.anims.generateFrameNumbers('bombEffect', {start:0, end : 6}),
+            frameRate : 12,
+            repeat : 1
+        });
     }
 
     playEffectAnimation(x, y,effectName) {
-        // 애니메이션을 재생할 스프라이트 생성
         const effectSprite = this.scene.add.sprite(x, y, effectName);
         
         // 애니메이션 설정
