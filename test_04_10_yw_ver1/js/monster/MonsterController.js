@@ -124,9 +124,12 @@ class MonsterController {
     spawnMonster(x, y,spawnKey,speed) {
         const monsterInfo = this.getMonsterInfoBySpriteKey(spawnKey);
         monsterInfo.speed = speed;
+
+        this.scene.masterController.effectController.playEffectAnimation(x,y,'effect');
         const monster = new Monster(this.scene, x, y, monsterInfo, this.player); // 항상 0001 유형의 몬스터 생성
         this.monstersGroup.add(monster);
         this.scene.physics.add.collider(this.monstersGroup, monster);
+
     }
 
     // 몬스터 생성 메서드
@@ -148,11 +151,12 @@ class MonsterController {
             return 0;
         }
     
-        console.log(this.stateMonsterLevel);
         const { x: posX, y: posY } = this.getRandomSpawnPosition();
+
         const monsterInfo = this.getMonsterInfoByLevel(this.stateMonsterLevel);
     
         setTimeout(() => {
+            this.scene.masterController.effectController.playEffectAnimation(posX,posY,'effect');
             const monster = new Monster(this.scene, posX, posY, monsterInfo, this.player);
             this.monstersGroup.add(monster);
             this.scene.physics.add.collider(this.monstersGroup, monster);
