@@ -52,7 +52,7 @@ class MonsterController {
     createCirclePatternMonster() {
         const centerX = this.player.x;
         const centerY = this.player.y;
-        const spawnKey= "Lv1_0001";
+        const spawnKey= "Lv2_0002";
         let radius = 400; // 기본 원의 반지름
         let monstersCount = 10; // 생성할 몬스터의 수
     
@@ -136,7 +136,6 @@ class MonsterController {
     createMonster() {
         // 스테이지의 맞는 배열 가져오기
         let numMonstersOfType = this.monsterNumbers[this.stageNum];
-        console.log(numMonstersOfType);
         // 현재 몬스터 생성된 수가 나와야할 몬스터 수보다 큰지 비교
         if (this.nowMonsterNum >= numMonstersOfType[this.stateMonsterLevel]) {
             // 크다면 다음 레벨 몬스터로 넘기고

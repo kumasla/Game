@@ -44,6 +44,7 @@
 
             //Lv2
             this.load.spritesheet('Lv2_0001', 'assets/monster/찐위들.png', {frameWidth: 30,frameHeight: 25});
+            this.load.spritesheet('Lv2_0002', 'assets/monster/부.png', {frameWidth: 41,frameHeight: 61});
 
             //Lv3
             this.load.spritesheet('Lv3_0001', 'assets/monster/쿵쿵.png', {frameWidth: 30,frameHeight: 32});

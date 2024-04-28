@@ -21,7 +21,6 @@ class EffectController{
     }
 
     playEffectAnimation(x, y,effectName) {
-        console.log(effectName);
         // 애니메이션을 재생할 스프라이트 생성
         const effectSprite = this.scene.add.sprite(x, y, effectName);
         

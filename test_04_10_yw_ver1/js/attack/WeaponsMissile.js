@@ -85,7 +85,6 @@ class WeaponMissile extends Phaser.Physics.Arcade.Sprite {
             }
 
             if(Math.floor(Math.random() * 100) + 1 <= this.weapon.absorption){
-                console.log(this.sceneData.masterController.characterController.characterStatus)
                 this.sceneData.masterController.characterController.characterStatus.absorptionHealth();
             }
         });

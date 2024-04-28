@@ -39,6 +39,21 @@
     },
     "level" : 2
   },
+  "Lv2_0002":{
+    "spriteKey": "Lv2_0002",
+    "skill" : 3000,
+    "scale": 1.5,
+    "health":50,
+    "speed":80,
+    "type":"ghost",
+    "reverseFlip": true,
+    "frameWidth": 30,
+    "frameHeight": 25,
+    "animations": {
+      "move": { "frames": { "start": 0, "end": 6 }, "framerate": 5, "repeat": -1 }
+    },
+    "level" : 2
+  },
   "Lv3_0001":{
     "spriteKey": "Lv3_0001",
     "scale": 2.5,
