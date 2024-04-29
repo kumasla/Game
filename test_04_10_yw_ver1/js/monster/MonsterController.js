@@ -6,10 +6,12 @@ class MonsterController {
         this.expBeadsGroup = scene.physics.add.group(); // 경험치 그룹생성
         this.bonusBoxGroup = scene.physics.add.group(); // 상자 그룹생성
         this.monsterTimer = 0;
+        this.spawnDelay = this.calculateSpawnDelay(this.stageNum); // stage마다 줄어드는 스폰 딜레이
         this.circlePatternTimer = 0; //몬스터 원형 패턴
         this.player = player;
         this.stageNum = 1;
-        this.monsterNumbers = [[100, 100, 100], [100, 100, 100], [100, 100, 100],[100, 100, 100],[100, 100, 100],[100, 100, 100]]; // 첫 레벨을 제외하고 각 스테이지별로 생성될 몬스터의 수
+        this.monsterRatio = this.calculateMonsterRatios(this.stageNum); // stage배율 받는 몬스터 스폰 로직
+        this.stageMonster = this.calculateTotalMonsters(this.stageNum); //stage마다 증가하는 몬스터 수
         this.nowMonsterNum = 0;
         this.stateMonsterLevel = 0;
         //this.createBoss();
@@ -20,6 +22,45 @@ class MonsterController {
 
         this.lastPlayerPosition = { x: null, y: null };
     }
+
+    // 스테이지 몬스터 소환 딜레이
+    calculateSpawnDelay(stageNum) {
+        const baseDelay = 1000; // 기본 주기: 1000밀리초
+        const reductionPerFiveStages = 100; // 5 스테이지마다 줄어드는 시간: 100밀리초
+        const decrement = Math.floor((stageNum - 1) / 5) * reductionPerFiveStages;
+    
+        return Math.max(baseDelay - decrement, 500); // 최소 주기는 500밀리초로 설정
+    }
+
+    //스테이지 마다 몬스터 수
+    calculateTotalMonsters(stageNum) {
+        const baseMonsters = 30;
+        const increasePerFiveStages = 50;
+        const incrementCount = Math.floor((stageNum - 1) / 5);
+
+        return baseMonsters + (incrementCount * increasePerFiveStages);
+    }
+
+    //스테이지 몬스터 비율
+    calculateMonsterRatios(stageNum) {
+        let baseRatio = [6, 3, 1]; // 초기 비율 설정
+        const incrementCount = Math.floor((stageNum - 1) / 5);
+    
+        // 레벨 1 몬스터 비율 감소: 0.5씩
+        baseRatio[0] -= incrementCount * 0.5;
+        // 레벨 2 몬스터 비율 증가: 0.3씩
+        baseRatio[1] += incrementCount * 0.3;
+        // 레벨 3 몬스터 비율 증가: 0.2씩
+        baseRatio[2] += incrementCount * 0.2;
+    
+        // 비율이 음수가 되지 않도록 보정
+        baseRatio = baseRatio.map(x => Math.max(x, 0));
+        let total = baseRatio.reduce((a, b) => a + b, 0);
+        // 총합을 10으로 조정하여 비율을 유지
+        return baseRatio.map(x => x / total * 10);
+    }
+    
+
     
     getRandomSpawnPosition() {
         this.mapWidth = this.scene.game.imageWidth;
@@ -52,7 +93,7 @@ class MonsterController {
     createCirclePatternMonster() {
         const centerX = this.player.x;
         const centerY = this.player.y;
-        const spawnKey= "Lv2_0002";
+        const spawnKey= "Lv1_0001";
         let radius = 400; // 기본 원의 반지름
         let monstersCount = 10; // 생성할 몬스터의 수
     
@@ -134,20 +175,18 @@ class MonsterController {
 
     // 몬스터 생성 메서드
     createMonster() {
+        const totalMonsters = this.stageMonster; // 스테이지별 총 몬스터 수
+        const ratio = this.monsterRatio; // 레벨별 생성 비율
         // 스테이지의 맞는 배열 가져오기
-        let numMonstersOfType = this.monsterNumbers[this.stageNum];
-        // 현재 몬스터 생성된 수가 나와야할 몬스터 수보다 큰지 비교
-        if (this.nowMonsterNum >= numMonstersOfType[this.stateMonsterLevel]) {
-            // 크다면 다음 레벨 몬스터로 넘기고
-            this.stateMonsterLevel++;
-            // 초기화
-            this.nowMonsterNum = 0;
-            return 0;
-        }
+        let targetCounts = ratio.map(r => Math.floor(totalMonsters * (r / ratio.reduce((a, b) => a + b))));
 
-          // 3단계 몬스터 까지 생성이 완료 됬다면 생성 종료
-          if (this.stateMonsterLevel > 2) {
-            return 0;
+        // 현재 레벨의 몬스터 생성이 목표를 충족하는지 확인
+        for (let level = 0; level < ratio.length; level++) {
+            if (this.monsterCounts[level] < targetCounts[level]) {
+                this.stateMonsterLevel = level;
+                break;
+            }
+            if (level === ratio.length - 1) return 0; // 모든 레벨의 목표 달성시 종료
         }
     
         const { x: posX, y: posY } = this.getRandomSpawnPosition();
@@ -160,7 +199,7 @@ class MonsterController {
             this.monstersGroup.add(monster);
             this.scene.physics.add.collider(this.monstersGroup, monster);
             this.nowMonsterNum++;
-        }, 1000);
+        }, this.spawnDelay);
     }
 
     getMonsterInfoByLevel(level) {
