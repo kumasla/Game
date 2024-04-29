@@ -12,6 +12,7 @@ class MonsterController {
         this.stageNum = 1;
         this.monsterRatio = this.calculateMonsterRatios(this.stageNum); // stage배율 받는 몬스터 스폰 로직
         this.stageMonster = this.calculateTotalMonsters(this.stageNum); //stage마다 증가하는 몬스터 수
+        this.monsterCounts = [0,0,0];
         this.nowMonsterNum = 0;
         this.stateMonsterLevel = 0;
         //this.createBoss();
@@ -34,7 +35,7 @@ class MonsterController {
 
     //스테이지 마다 몬스터 수
     calculateTotalMonsters(stageNum) {
-        const baseMonsters = 30;
+        const baseMonsters = 100;
         const increasePerFiveStages = 50;
         const incrementCount = Math.floor((stageNum - 1) / 5);
 
@@ -112,7 +113,7 @@ class MonsterController {
             radius = minRadius; // 원의 반지름을 최소로 조정
         }
     
-    
+        
         for (let i = 0; i < monstersCount; i++) {
             const angle = (i / monstersCount) * 2 * Math.PI;
             let x = centerX + radius * Math.cos(angle);
@@ -177,21 +178,27 @@ class MonsterController {
     createMonster() {
         const totalMonsters = this.stageMonster; // 스테이지별 총 몬스터 수
         const ratio = this.monsterRatio; // 레벨별 생성 비율
-        // 스테이지의 맞는 배열 가져오기
         let targetCounts = ratio.map(r => Math.floor(totalMonsters * (r / ratio.reduce((a, b) => a + b))));
-
-        // 현재 레벨의 몬스터 생성이 목표를 충족하는지 확인
-        for (let level = 0; level < ratio.length; level++) {
-            if (this.monsterCounts[level] < targetCounts[level]) {
-                this.stateMonsterLevel = level;
+    
+        if (this.nowMonsterNum >= totalMonsters) return; // 모든 몬스터가 생성되면 종료
+    
+        // 레벨 선택을 위한 무작위 로직
+        let cumulativeRatio = 0;
+        let randomThreshold = Math.random() * ratio.reduce((a, b) => a + b, 0);
+        let selectedLevel = 0;
+        for (let i = 0; i < ratio.length; i++) {
+            cumulativeRatio += ratio[i];
+            if (randomThreshold < cumulativeRatio) {
+                selectedLevel = i;
                 break;
             }
-            if (level === ratio.length - 1) return 0; // 모든 레벨의 목표 달성시 종료
         }
     
-        const { x: posX, y: posY } = this.getRandomSpawnPosition();
+        // 선택된 레벨에 해당하는 몬스터 수가 목표를 초과하지 않았는지 확인
+        if (this.monsterCounts[selectedLevel] >= targetCounts[selectedLevel]) return;
 
-        const monsterInfo = this.getMonsterInfoByLevel(this.stateMonsterLevel);
+        const { x: posX, y: posY } = this.getRandomSpawnPosition();
+        const monsterInfo = this.getMonsterInfoByLevel(selectedLevel);
     
         setTimeout(() => {
             this.scene.masterController.effectController.playEffectAnimation(posX,posY,'effect');
@@ -231,7 +238,9 @@ class MonsterController {
         //4초마다 원형 패턴 몬스터 생성
         if (this.circlePatternTimer > 240) {
             this.circlePatternTimer = 0;
-            this.createCirclePatternMonster(); // 원형 패턴 몬스터 생성
+            if(this.stageNum == 5){
+                this.createCirclePatternMonster(); // 원형 패턴 몬스터 생성
+            }
         }
 
         // 몬스터 그룹의 몬스터들을 갱신합니다.

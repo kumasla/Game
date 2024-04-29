@@ -202,7 +202,6 @@ class WeaponController{
 
         //return 받아온 캐릭터의 정보로 무기의 정보를 업데이트
         this.updateWeaponData(characterData);
-        console.log(this.weapons);
     }
 
     //무기 합체 메소드
@@ -298,7 +297,6 @@ class WeaponController{
 
     //캐릭터의 데이터로 무기 객체의 정보 업데이트
     updateWeaponData(characterData){
-        console.log(characterData)
         //등급에 따라 데미지 배율을 설정함
         let gradeMultiplier;
         for(let i = 0; i < this.weapons.length; i++){
